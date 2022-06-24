@@ -366,7 +366,7 @@ system("clear");
 
                     if (menu_attempts == 0)
                     {
-                        printf("\nForgot pin? [Y/n]:");
+                        printf("\nForgot password? [Y/n]:");
                         scanf(" %c", &ch_forgot);
                         ch_forgot = tolower(ch_forgot);
                         if (ch_forgot == 'y')
@@ -380,7 +380,7 @@ system("clear");
                             }
                             else
                             {
-                                printf("\nFailed to reset pin!\n");
+                                printf("\nFailed to reset password!\n");
                             }
                         }
                     }
@@ -411,7 +411,7 @@ void add_password()
         int i = 0;
 
         printf("Enter the name for the password: ");
-        scanf("%s", name);
+        scanf(" %[^\n]s", name);
         getchar();
 
         printf("Ok!\n");
@@ -419,7 +419,7 @@ void add_password()
 
         printf("\nEnter the password of %s: ", name);
         fflush(stdin);
-        scanf("%[^\n]s", password);
+        scanf(" %[^\n]s", password);
 
         // char *str = password;
 
