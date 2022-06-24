@@ -81,13 +81,6 @@ system("clear");
         if (0 == size)
         {
         startup:
-            system("echo \"Hi $USER, Welcome to the Password Manager App\"");
-            printf("\n");
-            printf("\"One Password for All Your Passwords...\"");
-            printf("\n\n");
-            sleep(4);
-            system("echo \"Ⓒ 2022 Ayush Ahirrao\"");
-            sleep(5);
             set_new_password();
         }
         else
@@ -285,6 +278,18 @@ system("clear");
                                 {
                                     printf("Reseting...\n");
                                     sleep(3);
+                                    system("clear");
+                                    sleep(2);
+                                    system("echo \"Hi $USER, Welcome to the Password Manager App\"");
+                                    printf("\n");
+                                    sleep(1);
+                                    printf("THE PASSWORD MANAGER APP\n");
+                                    printf("\"One Password for All Your Passwords...\"");
+                                    printf("\n\n");
+                                    sleep(4);
+                                    system("echo ""© 2022 Ayush Ahirrao");
+                                    sleep(5);
+                                    system("clear");
                                     reset();
                                     printf("Done\n");
                                     system("clear");
