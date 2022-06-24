@@ -157,7 +157,8 @@ system("clear");
                         case 0:
                             system("clear");
                             printf("Thank you!\n");
-                            sleep(1);
+                            sleep(2);
+                            system("clear");
                             exit(1);
                             break;
 
@@ -168,8 +169,7 @@ system("clear");
                             printf("  [0] <-- Go back to menu!\n");
                             printf("  [1] View Password Dictionary\n");
                             printf("  [2] Add Password\n");
-                            printf("  [3] Edit Password\n");
-                            printf("  [4] Remove Password\n");
+                            printf("  [3] Remove Password\n");
                             printf("\nEnter your choice [0-4]: ");
                             scanf("%d", &ch_1);
 
@@ -191,13 +191,11 @@ system("clear");
                                 break;
                             case 3:
                                 system("clear");
-                                printf("Coming soon!\n ");
+                                system("chmod 600 .passwords_list.txt");
+                                system("nano .passwords_list.txt");
+                                system("chmod 000 .passwords_list.txt");
                                 break;
-                            case 4:
-                                system("clear");
-                                printf("Coming soon!\n");
-                                break;
-
+                        
                             default:
                                 printf("\nInvalid Input!\n");
                                 sleep(2);
@@ -300,6 +298,7 @@ system("clear");
 
                             case 4:
                                 system("clear");
+   
                                 
                                 break;
 
