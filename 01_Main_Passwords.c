@@ -244,7 +244,7 @@ system("clear");
                             printf("  [1] Change Password\n");
                             printf("  [2] Display Current Password\n");
                             printf("  [3] Reset App\n");
-                            printf("  [4] Install Necessary Packages\n");
+                            printf("  [4] Check For Updates\n");
                             printf("  [5] Developer Mode\n");
                             printf("\nEnter your choice [0-5]: ");
                             scanf("%d", &ch_4);
@@ -300,7 +300,7 @@ system("clear");
 
                             case 4:
                                 system("clear");
-                                install_packs();
+                                
                                 break;
 
                             case 5:
