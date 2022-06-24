@@ -163,7 +163,7 @@ system("clear");
                             printf("  [1] View Password Dictionary\n");
                             printf("  [2] Add Password\n");
                             printf("  [3] Remove Password\n");
-                            printf("\nEnter your choice [0-4]: ");
+                            printf("\nEnter your choice [0-3]: ");
                             scanf("%d", &ch_1);
 
                             switch (ch_1)
