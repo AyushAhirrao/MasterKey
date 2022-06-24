@@ -4,216 +4,397 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
+#include <ayush.h>
 
 char *strrev(char *s);
-char encrypt_string(char *string);
-void decrypt_string();
-int encrypt_int(int integer);
-int decrypt_int(int integer);
 void add_password();
 void click_img();
 void timer(int time);
 void display_passwords();
-void change_pin(int list_pin);
+char change_password(char *list_pin);
 void display_menu();
-int read_pin(int main_code_pin);
+char read_password(char *main_password);
 void view_suspect_img();
 void install_packs();
-void set_new_pin();
+void set_new_password();
 void reset();
-void permission_open();
-void permission_close();
+int forgot_password(int *r);
+void reset_password();
 
 int main()
 {
-    system("clear");
-    permission_open();
-
+system("clear");
+    // choose_menu
+    // char decrypt_code;
     // attempts
     int menu_attempts = 3;
-    // setted pins for program execution in .pin.txt file
-    int main_code_pin;
-    main_code_pin = read_pin(main_code_pin);
+    // setted pins for program execution in .password.txt file
+    char main_password[100];
+    read_password(main_password);
+     // printf("%s\n", main_password);
+    // int new_pin;
+
     // user entered pins
-    int entered_code_pin;
+    char entered_password[100];
+
+    // char developer_key[100];
+    // system("cd /home/$USER/Downloads/passwords");
+    // system("chmod 600 .dev_key.txt");
+    // FILE *dtr;
+    // dtr = fopen(".dev_key.txt", "r");
+    // // fflush(stdin);
+    // // fscanf(" %s", developer_key);
+    // fgets(developer_key, sizeof(developer_key), dtr);
+    // getchar();
+    // // decrypt_string(developer_key);
+    // printf("\n**********%s********\n", developer_key);
+    // fclose(dtr);
+    // system("chmod 000 .dev_key.txt");
+    // char entered_developer_key[100];
+
     // choices
     int choose_menu;
     char go_back;
+    char ch_reset, ch_forgot;
+    int ch_1, ch_4;
 
-    if (main_code_pin == 0)
+    // suspect warning
+    system("chmod 600 .suspect.txt");
+    FILE *suspect;
+    suspect = fopen(".suspect.txt", "r");
+    int suspect_bool;
+    fscanf(suspect, "%d", &suspect_bool);
+    fclose(suspect);
+    system("chmod 000 .suspect.txt");
+
+    // printf("%s\n", main_password);
+    system("chmod 600 .password.txt");
+    FILE *fp;
+    fp = fopen(".password.txt", "r");
+
+    if (NULL != fp)
     {
-        printf("Startup:\n");
-        install_packs();
-        set_new_pin();
-    }
-    else
-    {
-        // 3 attempts for entering start pin{entered_code_pi}
-        while (menu_attempts != 0)
+        fseek(fp, 0, SEEK_END);
+        int size = ftell(fp);
+
+        if (0 == size)
         {
-            printf("Enter the pin:");
-            scanf("%d", &entered_code_pin);
-            system("clear");
-
-            if (entered_code_pin == main_code_pin)
+        startup:
+            system("echo \"Hi $USER, Welcome to the Password Manager App\"");
+            printf("\n");
+            printf("\"One Password for All Your Passwords...\"");
+            printf("\n\n");
+            sleep(4);
+            system("echo \"Ⓒ 2022 Ayush Ahirrao\"");
+            sleep(5);
+            set_new_password();
+        }
+        else
+        {
+            while (menu_attempts != 0)
             {
 
-            menu:
-                display_menu();
-                printf("Enter your choice [1-9]: ");
-                scanf("%d", &choose_menu);
-                system("clear");
-
-                switch (choose_menu)
-                {
-                case 1:
-                    display_passwords();
-                    break;
-                case 2:
-                    decrypt_string();
-                    break;
-                case 3:
-                    change_pin(main_code_pin);
-                    break;
-                case 4:
-                    view_suspect_img();
-                    break;
-                case 5:
-                    add_password();
-                    break;
-                case 6:
-                    install_packs();
-                    break;
-                case 7:
-                    main_code_pin = read_pin(main_code_pin);
-                    printf("\nCurrent pin is: %d\n", main_code_pin);
-                    break;
-                case 8:
-                    printf("Reseting...\n");
-                    reset();
-                    exit(1);
-
-                    break;
-                case 9:
-                    printf("exiting...\n");
-                    sleep(1);
-                    exit(1);
-                    break;
-
-                default:
-                    printf("Invalid Input!!\n");
-                    break;
-                }
-
-                printf("<--Go back to menu! [Y]:");
+                printf("Enter the Password:");
                 fflush(stdin);
-                scanf("%c", &go_back);
+                scanf("%[^\n]s", entered_password);
                 getchar();
-                printf("\n");
                 system("clear");
 
-                goto menu;
+              //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
+                if (strcmp(entered_password, main_password) == 0)
+                {
+                    if (suspect_bool == 1)
+                    {
+                        char sus_ch;
+                        printf("Warning: Someone tried to open the app without permission, View Suspect's Image?\n");
+                        printf("Continue [Y/n] : ");
+                        scanf(" %c", &sus_ch);
+                        getchar();
+                        sus_ch = tolower(sus_ch);
+                        if (sus_ch == 'y')
+                        {
 
-                menu_attempts = 0;
-            }
-            else
-            {
-                click_img();                                                  // clicking image of user in he/she enters wrong password
-                printf("Wrong pin!!! %d attempts left\n", menu_attempts - 1); // for user convience subtracting 1 from menu_attempts
+                            view_suspect_img();
 
-                menu_attempts--; // decrementing the attempts when pin is incorrect
+                            system("chmod 600 .suspect.txt");
+                            suspect_bool = 0;
+                            suspect = fopen(".suspect.txt", "w");
+                            fprintf(suspect, "%d", suspect_bool);
+                            fclose(suspect);
+                            system("chmod 000 .suspect.txt");
+
+                            system("clear");
+                            goto menu;
+                        }
+                        else
+                        {
+                            system("clear");
+                            suspect_bool = 0;
+                            system("chmod 600 .suspect.txt");
+                            FILE *suspect;
+                            suspect = fopen(".suspect.txt", "w");
+                            fprintf(suspect, "%d", suspect_bool);
+                            fclose(suspect);
+                            system("chmod 000 .suspect.txt");
+
+                            goto menu;
+                        }
+                    }
+                    else
+                    {
+
+                        // 3 attempts for entering start pin{entered_code_pi}
+
+                    menu:
+                        display_menu();
+                        printf("Enter your choice [0-4]: ");
+                        scanf("%d", &choose_menu);
+                        // system("clear");
+
+                        switch (choose_menu)
+                        {
+                        case 0:
+                            system("clear");
+                            printf("Thank you!\n");
+                            sleep(1);
+                            exit(1);
+                            break;
+
+                        case 1:
+                        menu_1:
+                            system("clear");
+                            printf("Edit Dictionary\n");
+                            printf("  [0] <-- Go back to menu!\n");
+                            printf("  [1] View Password Dictionary\n");
+                            printf("  [2] Add Password\n");
+                            printf("  [3] Edit Password\n");
+                            printf("  [4] Remove Password\n");
+                            printf("\nEnter your choice [0-4]: ");
+                            scanf("%d", &ch_1);
+
+                            switch (ch_1)
+                            {
+                            case 0:
+                                system("clear");
+                                goto menu;
+                                break;
+
+                            case 1:
+                                system("clear");
+
+                                display_passwords();
+                                break;
+                            case 2:
+                                system("clear");
+                                add_password();
+                                break;
+                            case 3:
+                                system("clear");
+                                printf("Coming soon!\n ");
+                                break;
+                            case 4:
+                                system("clear");
+                                printf("Coming soon!\n");
+                                break;
+
+                            default:
+                                printf("\nInvalid Input!\n");
+                                sleep(2);
+                                system("clear");
+                                goto menu_1;
+                                break;
+                            }
+
+                            printf("<-- Go back! [Y]:");
+                            fflush(stdin);
+                            scanf("%c", &go_back);
+                            getchar();
+                            // printf("%c", go_back);
+                            system("clear");
+                            goto menu_1;
+                            break;
+
+                        case 2:
+                            system("clear");
+                            char code[100];
+                            printf("Enter encrypted password:");
+                            scanf("%s", code);
+                            getchar();
+
+                            decrypt_string(code);
+
+                            printf("The decrypted password is: ");
+                            puts(code);
+                            printf("\n");
+
+                            break;
+
+                        case 3:
+                            system("clear");
+                            view_suspect_img();
+                            goto menu;
+                            break;
+
+                        case 4:
+                        menu_4:
+                            system("clear");
+                            printf("Settings:\n");
+                            printf("  [0] <-- Go back to menu!\n");
+                            printf("  [1] Change Password\n");
+                            printf("  [2] Display Current Password\n");
+                            printf("  [3] Reset App\n");
+                            printf("  [4] Install Necessary Packages\n");
+                            printf("  [5] Developer Mode\n");
+                            printf("\nEnter your choice [0-5]: ");
+                            scanf("%d", &ch_4);
+
+                            switch (ch_4)
+                            {
+                            case 0:
+                                system("clear");
+                                goto menu;
+                                break;
+
+                            case 1:
+                                system("clear");
+                                change_password(main_password);
+                                break;
+
+                            case 2:
+                                system("clear");
+                                system("chmod 400 .password.txt");
+
+                                FILE *ptr;
+                                ptr = fopen(".password.txt", "r");
+                                fscanf(ptr, " %[^\n]s", main_password);
+                                decrypt_string(main_password);
+                                printf("\nCurrent Password is: %s\n", main_password);
+                                fclose(ptr);
+                                system("chmod 000 .password.txt");
+
+                                break;
+
+                            case 3:
+                                system("clear");
+                                printf("\nNote: Resetting the app will delete all your date like stored passwords, cashed images, etc");
+                                printf("\n\nAre you sure you want to continue? [Y/n]:");
+                                scanf(" %c", &ch_reset);
+                                getchar();
+                                ch_reset = tolower(ch_reset);
+
+                                if (ch_reset == 'y')
+                                {
+                                    printf("Reseting...\n");
+                                    sleep(3);
+                                    reset();
+                                    printf("Done\n");
+                                    system("clear");
+                                    goto startup;
+                                }
+                                else
+                                {
+                                    printf("\nAbort!\n");
+                                }
+                                break;
+
+                            case 4:
+                                system("clear");
+                                install_packs();
+                                break;
+
+                            case 5:
+                                system("clear");
+                                system("chmod 400 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
+                                system("nano /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
+                                system("chmod 100 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
+                                break;
+
+                            default:
+                                printf("\nInvalid Input!\n");
+                                sleep(2);
+                                system("clear");
+                                goto menu_4;
+                                break;
+                            }
+
+                            printf("<-- Go back! [Y]:");
+                            fflush(stdin);
+                            scanf("%c", &go_back);
+                            getchar();
+                            // printf("%c", go_back);
+                            system("clear");
+                            goto menu_4;
+
+                            break;
+
+                        default:
+                            printf("\nInvalid Input!\n");
+                            sleep(2);
+                            system("clear");
+                            goto menu;
+                            break;
+                        }
+
+                        printf("<-- Go back to menu! [Y]:");
+                        fflush(stdin);
+                        scanf("%c", &go_back);
+                        getchar();
+                        // printf("%c", go_back);
+                        system("clear");
+
+                        goto menu;
+
+                        menu_attempts = 0;
+                    }
+                    system("clear");
+                }
+                else
+                {
+                    click_img(); // clicking image of user in he/she enters wrong password
+
+                    suspect_bool = 1;
+                    system("chmod 600 .suspect.txt");
+                    FILE *suspect;
+                    suspect = fopen(".suspect.txt", "w");
+                    fprintf(suspect, "%d", suspect_bool);
+                    fclose(suspect);
+                    system("chmod 000 .suspect.txt");
+                    printf("Wrong password!!! %d attempts left\n", menu_attempts - 1); // for user convience subtracting 1 from menu_attempts
+
+                    menu_attempts--; // decrementing the attempts when pin is incorrect
+
+                    if (menu_attempts == 0)
+                    {
+                        printf("\nForgot pin? [Y/n]:");
+                        scanf(" %c", &ch_forgot);
+                        ch_forgot = tolower(ch_forgot);
+                        if (ch_forgot == 'y')
+                        {
+                            int r;
+                            forgot_password(&r);
+
+                            if (r == 1)
+                            {
+                                reset_password();
+                            }
+                            else
+                            {
+                                printf("\nFailed to reset pin!\n");
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    permission_close();
+    fclose(fp);
+    system("chmod 600 .password.txt");
     return 0;
 }
 
 // Functions
 
-// Reverses the string
-char *strrev(char *string)
-{
-    if (string && *string)
-    {
-        char *b = string, *e = string + strlen(string) - 1;
-        while (b < e)
-        {
-            char t = *b;
-            *b++ = *e;
-            *e-- = t;
-        }
-    }
-    return string;
-}
-
-// Decrypts the string
-void decrypt_string()
-{
-    char code[100];
-    printf("Enter encrypted password:");
-    scanf("%s", code);
-    getchar();
-    // decrypt_string(string);
-    char *ptr = code;
-    int i = 0;
-    // decrypting string by 1
-
-    while (code[i] != '\0')
-    {
-        *ptr = *ptr - 1;
-        ptr++;
-        i++;
-    }
-
-    strrev(code);
-    printf("The decrypted password is: ");
-    puts(code);
-    printf("\n");
-}
-
-// Encrypts the string
-char encrypt_string(char *string)
-{
-    char *ptr = string;
-    int i = 0;
-    while (string[i] != '\0')
-    {
-        *ptr = *ptr + 1;
-        ptr++;
-        i++;
-    }
-
-    strrev(string);
-}
-
-int encrypt_int(int integer)
-{
-    int reverse = 0, remainder;
-
-    while (integer != 0)
-    {
-        remainder = integer % 10;
-        reverse = reverse * 10 + remainder;
-        integer /= 10;
-    }
-    int encrypt = (reverse * 2);
-    return encrypt;
-}
-
-int decrypt_int(int integer)
-{
-    int reverse = 0, remainder;
-
-    int decrypt = (integer / 2);
-    while (decrypt != 0)
-    {
-        remainder = decrypt % 10;
-        reverse = reverse * 10 + remainder;
-        decrypt /= 10;
-    }
-    return reverse;
-}
 
 // Adds the new password to .passwords_list
 void add_password()
@@ -222,12 +403,12 @@ void add_password()
     while (choose_menu == 'y')
     {
         system("clear");
-        system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary");
-        system("chmod 644 .passwords_list.txt");
+        system("chmod 600 .passwords_list.txt");
         FILE *ptr;
         ptr = fopen(".passwords_list.txt", "a");
         char name[100];
         char password[100];
+        int i = 0;
 
         printf("Enter the name for the password: ");
         scanf("%s", name);
@@ -252,7 +433,7 @@ void add_password()
         printf("Password successfully added!\n");
 
         fclose(ptr);
-        system("chmod 444 .passwords_list.txt");
+        system("chmod 000 .passwords_list.txt");
         printf("Do you want to add new password again in dictionary? [Y/n]:");
         scanf("%s", &choose_menu);
     }
@@ -262,25 +443,37 @@ void add_password()
 void click_img()
 {
     // system("sudo apt install streamer");
-    system("streamer -f jpeg -o .image.jpeg");
-    system("mv image.jpeg /home/$USER/Desktop/programming/code/Projects/Password_dictionary/");
+    system("streamer -f jpeg -o .image.jpeg -q");
+    system("mv image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
     system("clear");
 }
 
 // sets given timer
 void timer(int time)
 {
-    while (time != 0)
+    time = time + 2;
+    while (time >= 0)
     {
-        printf("\nwait for: %d sec", time);
-        time--;
-        sleep(1);
-        system("clear");
+        if (time == 0)
+        {
+            break;
+            system("clear");
+        }
+        else
+        {
+
+            printf("\nTry again in: %d sec", (time - 2));
+            time--;
+            sleep(1);
+            system("clear");
+        }
     }
+    system("clear");
 }
 
 void display_passwords()
 {
+    system("chmod 444 .passwords_list.txt");
     FILE *ptr;
     ptr = fopen(".passwords_list.txt", "r");
     // ptr = fopen(".passwords_list.txt", "r");
@@ -299,52 +492,59 @@ void display_passwords()
     printf("**********************************************************************\n");
     puts(whole_string);
     printf("**********************************************************************\n");
+    system("chmod 000 .passwords_list.txt");
 }
 
-void change_pin(int list_pin)
+char change_password(char *list_pin)
 {
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 222 .pin.txt");
+    system("chmod 600 .password.txt");
     // int *list_pin;
-    int new_list_pin;
+    char new_password[100];
     int attempt = 3;
-    int current_list_pin;
-    char choose_menu;
-    char try = 'y';
+    char current_password[100];
 
     FILE *ptr;
-    ptr = fopen(".pin.txt", "w");
-    printf("Warning: Don't exit while setting new pin else pin will set as 0 by default!\n");
+    ptr = fopen(".password.txt", "w");
 
-pin:
-    printf("\nEnter current pin:");
-    scanf("%d", &current_list_pin);
+    printf("Warning: Don't exit while setting new pin else password will set as 0 by default!\n");
+password:
 
-    if (current_list_pin == list_pin)
+    printf("\nEnter current password:");
+    // ff/lush(stdin);
+    scanf(" %[^\n]s", current_password);
+    getchar();
+    // puts(current_password);
+    // puts(list_pin);
+
+    // printf("\n********%d********\n", strcmp(current_password, list_pin));
+    if (strcmp(current_password, list_pin) == 0)
     {
-        printf("\nEnter new pin:");
-        scanf("%d", &new_list_pin);
-        printf("Password successfully changed to: %d\n", new_list_pin);
-        new_list_pin = encrypt_int(new_list_pin);
-        fprintf(ptr, "%d", new_list_pin);
+        printf("\nEnter new password:");
+        fflush(stdin);
+        scanf(" %[^\n]s", new_password);
+        getchar();
+        printf("Password successfully changed to: %s\n", new_password);
+        encrypt_string(new_password);
+        fprintf(ptr, "%s", new_password);
         attempt = 0;
     }
     else
     {
         click_img();
-        printf("\nWarning: Wrong pin! %d attempts left!", attempt - 1);
+        printf("Warning: Wrong password! %d attempts left!\n", attempt - 1);
         attempt--;
         if (attempt > 0)
         {
-            goto pin;
+            goto password;
         }
         else
         {
-            fprintf(ptr, "%d", list_pin);
+            encrypt_string(list_pin);
+            fprintf(ptr, "%s", list_pin);
         }
     }
 
-    system("chmod 444 .pin.txt");
+    system("chmod 000 .password.txt");
     fclose(ptr);
 }
 
@@ -352,34 +552,32 @@ void display_menu()
 {
     printf("**************************************************************************\n");
     printf("Menu: \n");
-    printf("[1] Passwords list\n");
-    printf("[2] Decrypt_string password\n");
-    printf("[3] Change pin\n");
-    printf("[4] view suspect's picture\n");
-    printf("[5] Add password\n");
-    printf("[6] Install necessary packages\n");
-    printf("[7] Show my pin\n");
-    printf("[8] Reset\n");
-    printf("[9] Exit\n");
+    printf("[1] Edit Dictionary \n");
+    printf("[2] Decrypt password\n");
+    printf("[3] View Suspect's Picture\n");
+    printf("[4] Settings\n");
+    printf("[0] Exit\n");
     printf("**************************************************************************\n");
 }
 
-int read_pin(int main_code_pin)
+char read_password(char *main_password)
 {
+    system("chmod 600 .password.txt");
     FILE *ptr;
-    ptr = fopen(".pin.txt", "r");
-    fscanf(ptr, "%d", &main_code_pin);
+    ptr = fopen(".password.txt", "r");
+    fscanf(ptr, " %[^\n]s", main_password);
     fclose(ptr);
-    main_code_pin = decrypt_int(main_code_pin);
-    // printf("%d\n", main_code_pin);
-    return main_code_pin;
+    decrypt_string(main_password);
+    // printf("%d\n", main_password);
+    return main_password;
+    system("chmod 000 .password.txt");
 }
 
 void view_suspect_img()
 {
-    // system("sudo apt install feh");
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/");
+    system("chmod 400 .image.jpeg");
     system("feh .image.jpeg");
+    system("chmod 000 .image.jpeg");
 }
 
 void install_packs()
@@ -392,51 +590,292 @@ void install_packs()
     // printf("\nsuccessfully installed necessary packages\n");
 }
 
-void set_new_pin()
+void set_new_password()
 {
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 222 .pin.txt");
+    system("clear");
+    // system("cd /home/$USER/Downloads/passwords");
+    system("chmod 600 .password.txt");
     FILE *ptr;
-    int new_pin;
-    ptr = fopen(".pin.txt", "w");
-    printf("Setting pin required!\n");
-    printf("Enter the pin:");
-    scanf("%d", &new_pin);
-    new_pin = encrypt_int(new_pin);
-    fprintf(ptr, "%d", new_pin);
-    printf("Done! exiting....");
+    char new_pin[100];
+    ptr = fopen(".password.txt", "w");
+    printf("Setting Password Required!\n");
+    printf("Set Password:");
+    scanf(" %[^\n]s", new_pin);
+    encrypt_string(new_pin);
+    fprintf(ptr, "%s", new_pin);
+    printf("\nDone\n");
     sleep(1);
     fclose(ptr);
-    system("chmod 444 .pin.txt");
+    system("chmod 000 .password.txt");
+
+    // system("chmod 600 .dev_key.txt");
+    // FILE *dtr;
+    // char developer_key[100];
+    // dtr = fopen(".dev_key.txt", "w");
+    // printf("\nSetting Developer Key Required!\n");
+    // printf("\nSet Developer Key:");
+    // scanf(" %[^\n]s", developer_key);
+    // getchar();
+    // encrypt_string(developer_key);
+    // fprintf(dtr, "%s", developer_key);
+    // printf("\nDone\n");
+    // sleep(1);
+    // fclose(dtr);
+    // system("chmod 000 .dev_key.txt");
+
+    system("chmod 600 .forgot_password.txt");
+    FILE *fp;
+    fp = fopen(".forgot_password.txt", "w");
+
+    char question1[100];
+    char question2[100];
+    char question3[100];
+    system("clear");
+
+    printf("\nPassword Recovery Questions;\n\n");
+
+    printf("What was your favorite subject in high school?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", question1);
+    getchar();
+    int i, len = 0, j;
+
+    // Calculating length of the array
+    len = sizeof(question1) / sizeof(question1[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (question1[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                question1[j] = question1[j + 1];
+            }
+            len--;
+        }
+    }
+    encrypt_string(question1);
+    fputs(question1, fp);
+    fputs("\n", fp);
+
+    printf("\nWhat was the name of your primary school?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", question2);
+    getchar();
+    len = 0;
+
+    // Calculating length of the array
+    len = sizeof(question2) / sizeof(question2[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (question1[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                question2[j] = question2[j + 1];
+            }
+            len--;
+        }
+    }
+    encrypt_string(question2);
+    fputs(question2, fp);
+    fputs("\n", fp);
+
+    printf("\nWhat is the name of the town where you were born?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", question3);
+    getchar();
+    len = 0;
+
+    // Calculating length of the array
+    len = sizeof(question3) / sizeof(question3[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (question3[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                question3[j] = question3[j + 1];
+            }
+            len--;
+        }
+    }
+    encrypt_string(question3);
+    fputs(question3, fp);
+    fputs("\n", fp);
+
+    fclose(fp);
+    system("chmod 000 .forgot_password.txt");
+    printf("Done! exiting....\n");
     exit(1);
 }
 
 void reset()
 {
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 666 .passwords_list.txt");
+    system("chmod 600 .passwords_list.txt");
     FILE *list;
     list = fopen(".passwords_list.txt", "w");
     fclose(list);
-    system("chmod 444 .passwords_list.txt");
+    system("chmod 000 .passwords_list.txt");
 
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 666 .pin.txt");
+    system("chmod 600 .password.txt");
     FILE *pin;
-    pin = fopen(".pin.txt", "w");
+    pin = fopen(".password.txt", "w");
     fclose(pin);
-    system("chmod 444 .pin.txt");
+    system("chmod 000 .password.txt");
 }
 
-void permission_open()
+int forgot_password(int *r)       
 {
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 666 .passwords_list.txt");
-    system("chmod 666 .pin.txt");
+    system("clear");
+    system("chmod 600 .forgot_password.txt");
+    FILE *ptr;
+    ptr = fopen(".forgot_password.txt", "r");
+
+    char ans[100];
+    int k = 0;
+
+    char input1[100];
+    char input2[100];
+    char input3[100];
+
+    char answer1[100];
+    char answer2[100];
+    char answer3[100];
+    // // char answer2[50];
+    // // char answer3[50];
+
+    // printf("\nPassword Recovery Questions;\n\n");
+    printf("\nWhat was your favorite subject in high school?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", input1);
+    getchar();
+    int i, len = 0, j;
+
+    // Calculating length of the array
+    len = sizeof(input1) / sizeof(input1[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (input1[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                input1[j] = input1[j + 1];
+            }
+            len--;
+        }
+    }
+
+    encrypt_string(input1);
+    // printf("\n%s\n", input1);
+
+    printf("\nWhat was the name of your primary school?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", input2);
+    getchar();
+    len = 0;
+
+    // Calculating length of the array
+    len = sizeof(input2) / sizeof(input2[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (input2[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                input2[j] = input2[j + 1];
+            }
+            len--;
+        }
+    }
+
+    encrypt_string(input2);
+    // printf("\n%s\n", input2);
+
+    printf("\nWhat is the name of the town where you were born?\n");
+    fflush(stdin);
+    scanf(" %[^\n]s", input3);
+    getchar();
+    len = 0;
+
+    // Calculating length of the array
+    len = sizeof(input3) / sizeof(input3[0]);
+
+    // Checks for space character in array if its there then ignores it and swap input1[i] to input1[i+1];
+    for (i = 0; i < len; i++)
+    {
+        if (input3[i] == ' ')
+        {
+            for (j = i; j < len; j++)
+            {
+                input3[j] = input3[j + 1];
+            }
+            len--;
+        }
+    }
+
+    encrypt_string(input3);
+    // printf("\n%s\n", input3);
+
+    while (fgets(ans, sizeof(ans), ptr))
+    {
+        if (k == 0)
+        {
+            strcpy(answer1, ans);
+        }
+        else if (k == 1)
+        {
+            strcpy(answer2, ans);
+        }
+        else if (k == 2)
+        {
+            strcpy(answer3, ans);
+        }
+
+        k++;
+    }
+
+    // printf("\n********%d*********\n", strcmp(answer1, input1));
+    // printf("\n********%d*********\n", strcmp(answer2, input2));
+    // printf("\n********%d*********\n", strcmp(answer3, input3));
+
+    if (strcmp(answer1, input1) == 10 && strcmp(answer2, input2) == 10 && strcmp(answer3, input3) == 10)
+    {
+        *r = 1;
+    }
+    else
+    {
+        *r = 0;
+    }
+
+    fclose(ptr);
+    system("chmod 000 .forgot_password.txt");
 }
-void permission_close()
+
+void reset_password()
 {
-    system("cd /home/$USER/Desktop/programming/code/Projects/Password_dictionary/codes");
-    system("chmod 444 .passwords_list.txt");
-    system("chmod 444 .pin.txt");
+    system("clear");
+    // system("cd /home/$USER/Downloads/passwords");
+    system("chmod 600 .password.txt");
+    FILE *ptr;
+    char new_pin[100];
+    ptr = fopen(".password.txt", "w");
+    printf("Setting Password Required!\n");
+    printf("Set Password:");
+    scanf(" %[^\n]s", new_pin);
+    encrypt_string(new_pin);
+    fprintf(ptr, "%s", new_pin);
+    printf("\nDone\n");
+    sleep(1);
+    fclose(ptr);
+    system("chmod 000 .password.txt");
 }
