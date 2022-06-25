@@ -86,9 +86,18 @@ system("clear");
 	    system("chmod 000 .password.txt");        }
         else
         {	
-                printf("-THE PASSWORD MANAGER APP-\n");
-		sleep(3);
-		system("clear");
+            system("echo -THE PASSWORD MANAGER APP-");
+            system("echo .");
+            sleep(1);
+            system("clear");
+            system("echo -THE PASSWORD MANAGER APP-");
+            system("echo ..");
+            sleep(1);
+            system("clear");
+            system("echo -THE PASSWORD MANAGER APP-");
+            system("echo ...");
+            sleep(1);
+            system("clear");
             while (menu_attempts != 0)
             {
 
