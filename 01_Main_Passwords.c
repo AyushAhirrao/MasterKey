@@ -87,8 +87,8 @@ system("clear");
         else
         {	
 	    system("echo -THE PASSWORD MANAGER APP-");
-            sleep(1);	
-	    system("clear");
+            sleep(1);
+            system("clear");
             system("echo -THE PASSWORD MANAGER APP-");
             system("echo .");
             sleep(1);
