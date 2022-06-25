@@ -85,7 +85,9 @@ system("clear");
             set_new_password();
 	    system("chmod 000 .password.txt");        }
         else
-        {	
+        {	            
+	    printf("\e[?25l");
+
 	    printf("-THE PASSWORD MANAGER APP-\n");
             printf(".\n");
             sleep(1);
@@ -115,6 +117,8 @@ system("clear");
             printf("\n");
             sleep(1);
             system("clear");
+		
+            printf("\e[?25h");
 		
             while (menu_attempts != 0)
             {
@@ -339,7 +343,7 @@ system("clear");
                                system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
-                                printf("Note:\n\n");
+                                printf("Note:\n");
             			printf("   1. Do not close the program while updating.\n");
           			printf("   2. Make sure you have a stable internet connection.\n\n");
           			printf("Continue [Y/n] : ");
