@@ -308,15 +308,13 @@ system("clear");
 
                             case 4:
                                 system("clear");
-	 			system("chmod 700 .password_manager.out");
-				system("chmod 700 .password_manager.c");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 system("echo please wait...");
                                 sleep(30);
                                 system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c -y");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c -y");
-                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out -y");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out -y");
+                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
+                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
+                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
 				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
 				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
                                 system("clear");
