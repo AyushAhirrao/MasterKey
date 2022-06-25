@@ -1,5 +1,5 @@
-// Password dictionary
-//update testing
+// Password_Manager_V1.1
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,9 +83,9 @@ system("clear");
         {
         startup:
             set_new_password();
-        }
+	    system("chmod 000 .password.txt");        }
         else
-        {
+        {	
                 printf("-THE PASSWORD MANAGER APP-\n");
 		sleep(3);
 		system("clear");
@@ -153,7 +153,8 @@ system("clear");
                         switch (choose_menu)
                         {
                         case 0:
-                        	printf("exiting...\n");
+                            printf("exiting...\n");
+			    system("chmod 000 .password.txt");
                             sleep(2);
                             system("clear");
                             exit(1);
