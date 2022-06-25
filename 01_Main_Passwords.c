@@ -57,7 +57,7 @@ system("clear");
     // choices
     int choose_menu;
     char go_back;
-    char ch_reset, ch_forgot;
+    char ch_reset, ch_forgot, choice;
     int ch_1, ch_4;
 
     // suspect warning
@@ -313,24 +313,33 @@ system("clear");
 				system("chmod 700 .password_manager.out");
 				system("chmod 700 .password_manager.c");
 			        system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
-				system("read -p 'Continue [Y] :  ' choice");
+				system("echo Continue [Y/n] : ");
+				scanf(" %c", &choice);
+				choice = tolower(choice);    
 				sleep(3);
 				system("clear");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
-                                system("echo please wait...");
-                                sleep(30);
-                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
-                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
-				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
-				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
-                                system("clear");
-                                printf("App successfully updated!\n");
-			       	system("chmod 700 .password_manager.out");
-				system("chmod 100 .password_manager.c");
-                                sleep(3);
-                                system("pkill terminal");                            
+				if(choice=='y')
+				{
+                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
+                                	system("echo please wait...");
+                                	sleep(30);
+                                	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
+                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
+                                	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
+                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
+					system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
+					system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
+                                	system("clear");
+                                	printf("App successfully updated!\n");
+			       		system("chmod 700 .password_manager.out");
+					system("chmod 100 .password_manager.c");
+                                	sleep(3);
+                                	system("pkill terminal");   
+				}
+				else
+				{
+					goto menu_4;
+				}
                                 break;
 
                             case 5:
@@ -605,7 +614,7 @@ char read_password(char *main_password)
 
 void view_suspect_img()
 {
-system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; chmod 000 .image.jpeg; fi;");
+system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; fi;");
 }
 
 void install_packs()
