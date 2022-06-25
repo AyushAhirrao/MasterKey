@@ -315,11 +315,12 @@ system("clear");
 			        system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
 				printf("Continue [Y/n] : ");
 				scanf(" %c", &choice);
-				choice = tolower(choice);    
-				system("clear");
-				if(choice=='y')
+				//choice = tolower(choice);    
+				
+				if(choice=='y' || choice=='Y')
 				{
 					sleep(1);
+					system("clear");
                             		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 	system("echo please wait...");
                                 	sleep(30);
