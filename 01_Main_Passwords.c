@@ -86,21 +86,36 @@ system("clear");
 	    system("chmod 000 .password.txt");        }
         else
         {	
-	    system("echo -THE PASSWORD MANAGER APP-");
+	    printf("-THE PASSWORD MANAGER APP-\n");
+            printf(".\n");
             sleep(1);
             system("clear");
-            system("echo -THE PASSWORD MANAGER APP-");
-            system("echo .");
+           
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf("..\n");
             sleep(1);
             system("clear");
-            system("echo -THE PASSWORD MANAGER APP-");
-            system("echo ..");
+           
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf("...\n");
             sleep(1);
             system("clear");
-            system("echo -THE PASSWORD MANAGER APP-");
-            system("echo ...");
+
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf(" ..\n");
             sleep(1);
             system("clear");
+           
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf("  .\n");
+            sleep(1);
+            system("clear");
+           
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf("\n");
+            sleep(1);
+            system("clear");
+		
             while (menu_attempts != 0)
             {
 
@@ -324,10 +339,10 @@ system("clear");
                                system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
-                                system("echo Note:");
-				system("echo   1. Do not close the program while updating.");
-				system("echo   2. Make sure you have a stable internet connection.");
-				printf("Continue [Y/n] : ");
+                                printf("Note:\n");
+            			printf("   1. Do not close the program while updating.\n");
+          			printf("   2. Make sure you have a stable internet connection.\n\n");
+          			printf("Continue [Y/n] : ");
 				scanf(" %c", &choice);
                                 system("clear");
 
