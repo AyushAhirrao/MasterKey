@@ -57,7 +57,7 @@ system("clear");
     // choices
     int choose_menu;
     char go_back;
-    char ch_reset, ch_forgot,choice;
+    char ch_reset, ch_forgot;
     int ch_1, ch_4;
 
     // suspect warning
@@ -313,8 +313,7 @@ system("clear");
 				system("chmod 700 .password_manager.out");
 				system("chmod 700 .password_manager.c");
 			        system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
-				system("Continue [Y] : ");
-				scanf(" %c", &choice);
+				system("read -p 'Continue [Y] :  ' choice");
 				sleep(3);
 				system("clear");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
