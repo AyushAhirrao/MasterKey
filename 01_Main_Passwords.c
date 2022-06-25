@@ -111,8 +111,8 @@ system("clear");
                         sus_ch = tolower(sus_ch);
                         if (sus_ch == 'y')
                         {
-				system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
-				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+				system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
+				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
 				view_suspect_img();
 
                             system("chmod 600 .suspect.txt");
@@ -228,8 +228,8 @@ system("clear");
 
                         case 3:
                             system("clear");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
                             view_suspect_img();
                             goto menu;
                             break;
@@ -615,7 +615,7 @@ char read_password(char *main_password)
 
 void view_suspect_img()
 {
-system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; fi;");
+system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; fi;");
 }
 
 void install_packs()
