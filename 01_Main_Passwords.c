@@ -109,8 +109,8 @@ system("clear");
                         sus_ch = tolower(sus_ch);
                         if (sus_ch == 'y')
                         {
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
-                            view_suspect_img();
+				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
+				view_suspect_img();
 
                             system("chmod 600 .suspect.txt");
                             suspect_bool = 0;
@@ -224,7 +224,7 @@ system("clear");
 
                         case 3:
                             system("clear");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
                             view_suspect_img();
                             goto menu;
                             break;
@@ -310,10 +310,10 @@ system("clear");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 system("echo please wait...");
                                 sleep(30);
-                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
-                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
-                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
+                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c -y");
+                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c -y");
+                                system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out -y");
+                            	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out -y");
 				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
 				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
                                 system("clear");
@@ -596,9 +596,7 @@ char read_password(char *main_password)
 
 void view_suspect_img()
 {
-    system("chmod 400 .image.jpeg");
-    //system("feh .image.jpeg");
-    system("chmod 000 .image.jpeg");
+system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; chmod 000 .image.jpeg; fi;");
 }
 
 void install_packs()
