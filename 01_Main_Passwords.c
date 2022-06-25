@@ -86,7 +86,7 @@ system("clear");
         }
         else
         {
-                printf("-THE ;alkjfasld;fjasd;lfj PASSWORD MANAGER APP-\n");
+                printf("-THE PASSWORD MANAGER APP-\n");
 		sleep(3);
 		system("clear");
             while (menu_attempts != 0)
