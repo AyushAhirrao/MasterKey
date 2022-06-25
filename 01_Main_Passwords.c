@@ -94,7 +94,7 @@ system("clear");
 
                 printf("Enter the password: ");
                 fflush(stdin);
-                scanf("%[^\n]s", entered_password);
+                scanf(" %[^\n]s", entered_password);
                 getchar();
                 system("clear");
 
@@ -112,7 +112,7 @@ system("clear");
                         if (sus_ch == 'y')
                         {
 				system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
-				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
 				view_suspect_img();
 
                             system("chmod 600 .suspect.txt");
@@ -229,7 +229,7 @@ system("clear");
                         case 3:
                             system("clear");
 			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
                             view_suspect_img();
                             goto menu;
                             break;
@@ -313,10 +313,10 @@ system("clear");
 				system("chmod 700 .password_manager.out");
 				system("chmod 700 .password_manager.c");
 			        system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
-				system("echo Continue [Y/n] : ");
+				printf("Continue [Y/n] : ");
 				scanf(" %c", &choice);
 				choice = tolower(choice);    
-				sleep(3);
+				sleep(1);
 				system("clear");
 				if(choice=='y')
 				{
@@ -483,7 +483,7 @@ void click_img()
 {
     // system("sudo apt install streamer");
     system("streamer -f jpeg -o .image.jpeg -q");
-    system("mv image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
+    system("mv .image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
     system("clear");
 }
 
