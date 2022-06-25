@@ -309,38 +309,51 @@ system("clear");
                                 break;
 
                             case 4:
+                               system("clear");
+                                system("chmod 700 .password_manager.out");
+                                system("chmod 700 .password_manager.c");
+                                system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
+                                system("echo Continue [Y/n] : ");
+                                scanf(" %c", &choice);
+                                choice = tolower(choice);
+                                sleep(3);
                                 system("clear");
-				system("chmod 700 .password_manager.out");
-				system("chmod 700 .password_manager.c");
-			        system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
-				printf("Continue [Y/n] : ");
-				scanf(" %c", &choice);
-				//choice = tolower(choice);    
-				
-				if(choice=='y' || choice=='Y')
-				{
-					sleep(1);
-					system("clear");
-                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
-                                	system("echo please wait...");
-                                	sleep(30);
-                                	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
-                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
-                                	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
-                            		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
-					system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
-					system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
-                                	system("clear");
-                                	printf("App successfully updated!\n");
-			       		system("chmod 700 .password_manager.out");
-					system("chmod 100 .password_manager.c");
-                                	sleep(3);
-                                	system("pkill terminal");   
-				}
-				else
-				{
-					goto menu_4;
-				}
+
+                                if (choice == 'y')
+                                {
+                                    system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
+                                    system("echo please wait...");
+                                    sleep(30);
+                                    FILE *upd;
+                                    upd = fopen("01_Main_Passwords.c?raw=true", "r");
+                                    if (upd == NULL)
+                                    {
+                                        system("clear");
+                                        printf("Warning: error while updating\n");
+                                        printf("Please check your internet!\n");
+					 
+                                    }
+                                    else
+                                    {
+
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
+                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
+                                        system("clear");
+                                        printf("App successfully updated!\n");
+                                        system("chmod 700 .password_manager.out");
+                                        system("chmod 100 .password_manager.c");
+                                        sleep(3);
+                                        system("pkill terminal");
+                                    }
+                                }
+                                else
+                                {
+                                    goto menu_4;
+                                }
                                 break;
 
                             case 5:
