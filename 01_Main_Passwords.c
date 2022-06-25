@@ -1,5 +1,4 @@
 // Password dictionary
-//testing
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -87,7 +86,7 @@ system("clear");
         else
         {
                 printf("-THE PASSWORD MANAGER APP-\n");
-		sleep(2);
+		sleep(3);
 		system("clear");
             while (menu_attempts != 0)
             {
