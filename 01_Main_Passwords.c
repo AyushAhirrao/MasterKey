@@ -411,7 +411,7 @@ system("clear");
         }
     }
     fclose(fp);
-    system("chmod 600 .password.txt");
+    system("chmod 000 .password.txt");
     return 0;
 }
 
