@@ -346,7 +346,7 @@ system("clear");
 				scanf(" %c", &choice);
                                 system("clear");
 
-                                if (choice == 'y')
+                                if (choice == 'y' || choice=='Y')
                                 {
                                     system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                     system("echo please wait...");
