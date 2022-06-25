@@ -316,10 +316,10 @@ system("clear");
 				printf("Continue [Y/n] : ");
 				scanf(" %c", &choice);
 				choice = tolower(choice);    
-				sleep(1);
 				system("clear");
 				if(choice=='y')
 				{
+					sleep(1);
                             		system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 	system("echo please wait...");
                                 	sleep(30);
