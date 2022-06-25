@@ -313,24 +313,22 @@ system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
                                 system("echo Note: Do not close the program while updating and make sure you have a stable internet connection.\n\n");
-                                system("echo Continue [Y/n] : ");
-                                scanf(" %c", &choice);
-                                choice = tolower(choice);
-                                sleep(3);
+				printf("Continue [Y/n] : ");
+				scanf(" %c", &choice);
                                 system("clear");
 
                                 if (choice == 'y')
                                 {
                                     system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                     system("echo please wait...");
-                                    sleep(30);
+                                    sleep(20);
                                     FILE *upd;
                                     upd = fopen("01_Main_Passwords.c?raw=true", "r");
                                     if (upd == NULL)
                                     {
                                         system("clear");
-                                        printf("Warning: error while updating\n");
-                                        printf("Please check your internet!\n");
+                                        printf("Warning: Error while updating\n");
+                                        printf("Please check your internet connection!\n");
 					 
                                     }
                                     else
