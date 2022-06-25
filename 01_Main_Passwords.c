@@ -339,14 +339,14 @@ system("clear");
                                system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
-                                printf("Note:\n");
+                                printf("Note:\n\n");
             			printf("   1. Do not close the program while updating.\n");
           			printf("   2. Make sure you have a stable internet connection.\n\n");
           			printf("Continue [Y/n] : ");
 				scanf(" %c", &choice);
                                 system("clear");
 
-                                if (choice == 'y' || choice=='Y')
+                                if (choice == 'y' || choice == 'Y')
                                 {
                                     system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                     system("echo please wait...");
