@@ -57,7 +57,7 @@ system("clear");
     // choices
     int choose_menu;
     char go_back;
-    char ch_reset, ch_forgot;
+    char ch_reset, ch_forgot,choice;
     int ch_1, ch_4;
 
     // suspect warning
