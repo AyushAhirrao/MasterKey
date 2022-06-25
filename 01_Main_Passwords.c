@@ -86,6 +86,8 @@ system("clear");
 	    system("chmod 000 .password.txt");        }
         else
         {	
+	    system("echo -THE PASSWORD MANAGER APP-");
+            sleep(1);		
             system("echo -THE PASSWORD MANAGER APP-");
             system("echo .");
             sleep(1);
