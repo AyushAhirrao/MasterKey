@@ -605,7 +605,7 @@ char read_password(char *main_password)
 
 void view_suspect_img()
 {
-system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; chmod 000 .image.jpeg; fi;");
+system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 400 .image.jpeg; chmod 000 .image.jpeg; fi;");
 }
 
 void install_packs()
@@ -910,8 +910,11 @@ void reset_password()
     fprintf(ptr, "%s", new_pin);
     printf("Setting new password...\n");
     sleep(1);
-    printf("Done!\n");
-    sleep(1);
+    system("echo Done!");
+    printf("\n");
+    system("echo exiting...");
+    sleep(2);
+    system("clear");
     fclose(ptr);
     system("chmod 000 .password.txt");
 }
