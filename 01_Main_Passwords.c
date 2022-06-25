@@ -87,6 +87,7 @@ system("clear");
         {
                 printf("-THE PASSWORD MANAGER APP-\n");
 		sleep(2);
+		system("clear");
             while (menu_attempts != 0)
             {
 
@@ -109,6 +110,7 @@ system("clear");
                         sus_ch = tolower(sus_ch);
                         if (sus_ch == 'y')
                         {
+				system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
 				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
 				view_suspect_img();
 
@@ -224,6 +226,7 @@ system("clear");
 
                         case 3:
                             system("clear");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 400 .image.jpeg;");
 			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then chmod 400 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
                             view_suspect_img();
                             goto menu;
