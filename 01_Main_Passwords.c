@@ -108,7 +108,7 @@ system("clear");
                         sus_ch = tolower(sus_ch);
                         if (sus_ch == 'y')
                         {
-							system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
                             view_suspect_img();
 
                             system("chmod 600 .suspect.txt");
@@ -223,7 +223,7 @@ system("clear");
 
                         case 3:
                             system("clear");
-							system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
+			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f image.jpeg ]; then feh .image.jpeg; else echo Error: image not captured; echo ; echo There was no invalid login attempt yet or you might not have a camera configured to your system; fi;");
                             view_suspect_img();
                             goto menu;
                             break;
@@ -307,6 +307,8 @@ system("clear");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 system("echo please wait...");
                                 sleep(30);
+				system("chmod 700 .password_manager.out");
+				system("chmod 700 .password_manager.c");
                                 system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
                                 system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
@@ -315,6 +317,8 @@ system("clear");
 				system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
                                 system("clear");
                                 printf("App successfully updated!\n");
+			       	system("chmod 700 .password_manager.out");
+				system("chmod 100 .password_manager.c");
                                 sleep(3);
                                 system("pkill terminal");                            
                                 break;
