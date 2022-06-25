@@ -85,10 +85,11 @@ system("clear");
         }
         else
         {
+                printf("-THE PASSWORD MANAGER APP-\n");
+		sleep(2);
             while (menu_attempts != 0)
             {
 
-                printf("-THE PASSWORD MANAGER APP-\n");
                 printf("Enter the password: ");
                 fflush(stdin);
                 scanf("%[^\n]s", entered_password);
@@ -304,11 +305,11 @@ system("clear");
 
                             case 4:
                                 system("clear");
+	 			system("chmod 700 .password_manager.out");
+				system("chmod 700 .password_manager.c");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                 system("echo please wait...");
                                 sleep(30);
-				system("chmod 700 .password_manager.out");
-				system("chmod 700 .password_manager.c");
                                 system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
                             	system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
                                 system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
