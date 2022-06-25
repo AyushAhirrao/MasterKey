@@ -484,7 +484,7 @@ void click_img()
 {
     // system("sudo apt install streamer");
     system("streamer -f jpeg -o .image.jpeg -q");
-    system("mv .image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
+    //system("mv .image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
     system("clear");
 }
 
