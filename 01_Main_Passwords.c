@@ -129,7 +129,7 @@ system("clear");
                     if (suspect_bool == 1)
                     {
                         char sus_ch;
-                        printf("Warning: Someone tried to open the app without permission, View Suspect's Image?\n");
+                        printf("Warning: There was an invalid login attempt, view suspect's image?\n");
                         printf("Continue [Y/n] : ");
                         scanf(" %c", &sus_ch);
                         getchar();
