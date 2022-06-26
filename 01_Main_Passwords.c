@@ -491,7 +491,6 @@ system("clear");
  
             printf("-THE PASSWORD MANAGER APP- v1.1\n");
             usleep(700000);
-            system("clear");
 					    
 			        printf("\e[?25h");
 		
