@@ -40,10 +40,10 @@ system("clear");
     char entered_password[100];
 
     // choices
-    int choose_menu;
+    char choose_menu;
     char go_back;
     char ch_reset, ch_forgot, choice;
-    int ch_1, ch_4;
+    char ch_1, ch_4;
 
     // suspect warning
     system("chmod 600 .suspect.txt");
@@ -172,12 +172,12 @@ system("clear");
                     menu:
                         display_menu();
                         printf("Enter your choice [0-4]: ");
-                        scanf("%d", &choose_menu);
+                        scanf(" %c", &choose_menu);
                         // system("clear");
 
                         switch (choose_menu)
                         {
-                        case 0:
+                        case '0':
                             printf("exiting...\n");
 			    system("chmod 000 .password.txt");
                             sleep(2);
@@ -185,7 +185,7 @@ system("clear");
                             exit(1);
                             break;
 
-                        case 1:
+                        case '1':
                         menu_1:
                             system("clear");
                             printf("Edit Dictionary\n\n");
@@ -194,25 +194,25 @@ system("clear");
                             printf("  [2] Add Password\n");
                             printf("  [3] Remove Password\n");
                             printf("\nEnter your choice [0-3]: ");
-                            scanf("%d", &ch_1);
+                            scanf(" %c", &ch_1);
 
                             switch (ch_1)
                             {
-                            case 0:
+                            case '0':
                                 system("clear");
                                 goto menu;
                                 break;
 
-                            case 1:
+                            case '1':
                                 system("clear");
 
                                 display_passwords();
                                 break;
-                            case 2:
+                            case '2':
                                 system("clear");
                                 add_password();
                                 break;
-                            case 3:
+                            case '3':
                                 system("clear");
                                 system("chmod 600 .passwords_list.txt");
                                 system("nano .passwords_list.txt");
@@ -229,14 +229,14 @@ system("clear");
 
                             printf("<-- Go back! [Y] : ");
                             fflush(stdin);
-                            scanf("%c", &go_back);
+                            scanf(" %c", &go_back);
                             getchar();
                             // printf("%c", go_back);
                             system("clear");
                             goto menu_1;
                             break;
 
-                        case 2:
+                        case '2':
                             system("clear");
                             char code[100];
                             printf("Enter the encrypted password: ");
@@ -251,7 +251,7 @@ system("clear");
 
                             break;
 
-                        case 3:
+                        case '3':
                             system("clear");
 			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
 			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
@@ -259,7 +259,7 @@ system("clear");
                             goto menu;
                             break;
 
-                        case 4:
+                        case '4':
                         menu_4:
                             system("clear");
                             printf("Settings:\n\n");
@@ -271,21 +271,21 @@ system("clear");
                             printf("  [5] Developer Mode\n");
 			    printf("  [6] About\n");
                             printf("\nEnter your choice [0-6]: ");
-                            scanf("%d", &ch_4);
+                            scanf(" %c", &ch_4);
 
                             switch (ch_4)
                             {
-                            case 0:
+                            case '0':
                                 system("clear");
                                 goto menu;
                                 break;
 
-                            case 1:
+                            case '1':
                                 system("clear");
                                 change_password(main_password);
                                 break;
 
-                            case 2:
+                            case '2':
                                 system("clear");
                                 system("chmod 400 .password.txt");
 
@@ -299,7 +299,7 @@ system("clear");
 
                                 break;
 
-                            case 3:
+                            case '3':
                                 system("clear");
                                 printf("Note: Resetting the app will delete all your data like stored passwords, cashed images, etc.");
                                 printf("\n\nAre you sure you want to continue? [Y/n] : ");
@@ -334,7 +334,7 @@ system("clear");
                                 }
                                 break;
 
-                            case 4:
+                            case '4':
                                system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
@@ -382,14 +382,14 @@ system("clear");
                                 }
                                 break;
 
-                            case 5:
+                            case '5':
                                 system("clear");
                                 system("chmod 400 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 system("nano /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 system("chmod 100 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 break;
 					    
-		            case 6:
+		            case '6':
                                 system("clear");
                                 printf("- \n");
             			usleep(500000);
@@ -415,7 +415,7 @@ system("clear");
             			usleep(500000);
             			system("clear");
 
-            			printf("-THE PASSWORD MANAGER APP- v1.1\n");
+            			printf("-THE PASSWORD MANAGER APP- v1.1\n\n");
             			usleep(500000);
                                 break;
 
