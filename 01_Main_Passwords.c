@@ -90,32 +90,34 @@ system("clear");
 
 	    printf("-THE PASSWORD MANAGER APP-\n");
             printf(".\n");
-            sleep(1);
+            printf("-THE PASSWORD MANAGER APP-\n");
+            printf(".\n");
+            usleep(500000);
             system("clear");
-           
+
             printf("-THE PASSWORD MANAGER APP-\n");
             printf("..\n");
-            sleep(1);
+            usleep(500000);
             system("clear");
-           
+
             printf("-THE PASSWORD MANAGER APP-\n");
             printf("...\n");
-            sleep(1);
+            usleep(500000);
             system("clear");
 
             printf("-THE PASSWORD MANAGER APP-\n");
             printf(" ..\n");
-            sleep(1);
+            usleep(500000);
             system("clear");
-           
+
             printf("-THE PASSWORD MANAGER APP-\n");
             printf("  .\n");
-            sleep(1);
+            usleep(500000);
             system("clear");
-           
+
             printf("-THE PASSWORD MANAGER APP-\n");
             printf("\n");
-            sleep(1);
+            usleep(500000);
             system("clear");
 		
             printf("\e[?25h");
@@ -484,7 +486,7 @@ system("clear");
 void add_password()
 {
     char choose_menu = 'y';
-    while (choose_menu == 'y')
+    while (choose_menu == 'y' || choose_menu == 'Y')
     {
         system("clear");
         system("chmod 600 .passwords_list.txt");
@@ -514,7 +516,7 @@ void add_password()
         fprintf(ptr, "\n");
 
         printf("\nPassword successfully added to the dictionary!\n");
-		sleep(3);
+		sleep(2);
 		system("clear");
         fclose(ptr);
         system("chmod 000 .passwords_list.txt");
