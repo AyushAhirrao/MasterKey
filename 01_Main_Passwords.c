@@ -392,33 +392,106 @@ system("clear");
 		            case '6':
 			  	printf("\e[?25l");
 					    
-                                system("clear");
-                                printf("- \n");
-            			usleep(500000);
-           			system("clear");
-
-            			printf("-THE \n");
-				usleep(500000);
-           			system("clear");
-
-            			printf("-THE PASSWORD \n");
-            			usleep(500000);
-			        system("clear");
-
-            			printf("-THE PASSWORD MANAGER \n");
-            			usleep(500000);
-            			system("clear");
-
-            			printf("-THE PASSWORD MANAGER APP\n");
-            			usleep(500000);
-            			system("clear");
-
-            			printf("-THE PASSWORD MANAGER APP-\n");
-            			usleep(500000);
-            			system("clear");
-
-            			printf("-THE PASSWORD MANAGER APP- v1.1\n\n");
-            			usleep(500000);
+                                printf("-\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-T\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-TH\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE\n");
+            usleep(500000);
+            system("clear");
+ 
+            printf("-THE P\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PA\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PAS\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASS\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSW\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWO\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWOR\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD\n");
+            usleep(500000);
+            system("clear");
+ 
+            printf("-THE PASSWORD M\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MA\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MAN\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANA\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAG\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGE\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER\n");
+            usleep(500000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER A\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER AP\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER APP\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER APP-\n");
+            usleep(500000);
+            system("clear");
+ 
+ 
+            printf("-THE PASSWORD MANAGER APP- v\n");
+            usleep(200000);
+            system("clear");
+ 
+            printf("-THE PASSWORD MANAGER APP- v1.1\n");
+            usleep(700000);
+            system("clear");
 					    
 			        printf("\e[?25h");
 		
