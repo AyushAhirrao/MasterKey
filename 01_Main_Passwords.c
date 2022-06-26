@@ -39,21 +39,6 @@ system("clear");
     // user entered pins
     char entered_password[100];
 
-    // char developer_key[100];
-    // system("cd /home/$USER/Downloads/passwords");
-    // system("chmod 600 .dev_key.txt");
-    // FILE *dtr;
-    // dtr = fopen(".dev_key.txt", "r");
-    // // fflush(stdin);
-    // // fscanf(" %s", developer_key);
-    // fgets(developer_key, sizeof(developer_key), dtr);
-    // getchar();
-    // // decrypt_string(developer_key);
-    // printf("\n**********%s********\n", developer_key);
-    // fclose(dtr);
-    // system("chmod 000 .dev_key.txt");
-    // char entered_developer_key[100];
-
     // choices
     int choose_menu;
     char go_back;
@@ -87,10 +72,13 @@ system("clear");
         else
         {	            
 	    printf("\e[?25l");
+		
+	    printf("-THE PASSWORD MANAGER APP-\n");
+            printf("\n");
+            usleep(500000);
+            system("clear");
 
 	    printf("-THE PASSWORD MANAGER APP-\n");
-            printf(".\n");
-            printf("-THE PASSWORD MANAGER APP-\n");
             printf(".\n");
             usleep(500000);
             system("clear");
@@ -119,6 +107,7 @@ system("clear");
             printf("\n");
             usleep(500000);
             system("clear");
+		
 		
             printf("\e[?25h");
 		
