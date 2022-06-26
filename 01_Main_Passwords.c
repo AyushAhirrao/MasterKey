@@ -70,7 +70,10 @@ system("clear");
             set_new_password();
 	    system("chmod 000 .password.txt");        }
         else
-        {	            
+        {
+		
+            system("clear");
+		
 	    printf("\e[?25l");
 		
 	    printf("-THE PASSWORD MANAGER APP-\n");
@@ -266,7 +269,8 @@ system("clear");
                             printf("  [3] Reset App\n");
                             printf("  [4] Update\n");
                             printf("  [5] Developer Mode\n");
-                            printf("\nEnter your choice [0-5]: ");
+			    printf("  [6] About\n");
+                            printf("\nEnter your choice [0-6]: ");
                             scanf("%d", &ch_4);
 
                             switch (ch_4)
@@ -383,6 +387,36 @@ system("clear");
                                 system("chmod 400 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 system("nano /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 system("chmod 100 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
+                                break;
+					    
+		            case 6:
+                                system("clear");
+                                printf("- \n");
+            			usleep(500000);
+           			system("clear");
+
+            			printf("-THE \n");
+				usleep(500000);
+           			system("clear");
+
+            			printf("-THE PASSWORD \n");
+            			usleep(500000);
+			        system("clear");
+
+            			printf("-THE PASSWORD MANAGER \n");
+            			usleep(500000);
+            			system("clear");
+
+            			printf("-THE PASSWORD MANAGER APP\n");
+            			usleep(500000);
+            			system("clear");
+
+            			printf("-THE PASSWORD MANAGER APP-\n");
+            			usleep(500000);
+            			system("clear");
+
+            			printf("-THE PASSWORD MANAGER APP- v1.1\n");
+            			usleep(500000);
                                 break;
 
                             default:
