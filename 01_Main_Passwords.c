@@ -596,7 +596,7 @@ void add_password()
         char password[100];
         int i = 0;
 
-        printf("Note: Name will be stored as ( <name> --> <password> );\n\n");
+        printf("Note: Name will be stored as ( <name> --> <encrypted password> );\n\n");
         printf("Enter name for the password: ");
         scanf(" %[^\n]s", name);
         getchar();
