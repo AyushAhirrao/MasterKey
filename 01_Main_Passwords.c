@@ -1,5 +1,4 @@
-// Password_Manager_V1.1
-
+// Password_Manager_v1.1 (beta)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,12 +7,12 @@
 #include <ctype.h>
 #include <ayush.h>
 
-char *strrev(char *s);
 void add_password();
 void click_img();
 void timer(int time);
-void display_passwords();
-char change_password(char *list_pin);
+void display_passwords_list();
+void display_current_password();
+char change_password(char *current_password);
 void display_menu();
 char read_password(char *main_password);
 void view_suspect_img();
@@ -22,27 +21,29 @@ void set_new_password();
 void reset();
 int forgot_password(int *r);
 void reset_password();
+void about();
+void start();
 
 int main()
 {
-system("clear");
-    // choose_menu
-    // char decrypt_code;
-    // attempts
-    int menu_attempts = 3;
+    system("clear");
+
     // setted pins for program execution in .password.txt file
     char main_password[100];
     read_password(main_password);
-     // printf("%s\n", main_password);
-    // int new_pin;
+    // printf("%s\n", main_password);
+    // sleep(3);
 
     // user entered pins
     char entered_password[100];
 
+    // attempts
+    int menu_attempts = 3;
+
     // choices
-    char choose_menu;
+    char choose_menu; // main menu
     char go_back;
-    char ch_reset, ch_forgot, choice;
+    char ch_reset, ch_forgot, ch_update;
     char ch_1, ch_4;
 
     // suspect warning
@@ -68,52 +69,13 @@ system("clear");
         {
         startup:
             set_new_password();
-	    system("chmod 000 .password.txt");        }
+            system("chmod 000 .password.txt");
+        }
         else
         {
-		
-            system("clear");
-		
-	    printf("\e[?25l");
-		
-	    printf("-THE PASSWORD MANAGER APP-\n");
-            printf("\n");
-            usleep(500000);
-            system("clear");
 
-	    printf("-THE PASSWORD MANAGER APP-\n");
-            printf(".\n");
-            usleep(500000);
-            system("clear");
+            start();
 
-            printf("-THE PASSWORD MANAGER APP-\n");
-            printf("..\n");
-            usleep(500000);
-            system("clear");
-
-            printf("-THE PASSWORD MANAGER APP-\n");
-            printf("...\n");
-            usleep(500000);
-            system("clear");
-
-            printf("-THE PASSWORD MANAGER APP-\n");
-            printf(" ..\n");
-            usleep(500000);
-            system("clear");
-
-            printf("-THE PASSWORD MANAGER APP-\n");
-            printf("  .\n");
-            usleep(500000);
-            system("clear");
-
-            printf("-THE PASSWORD MANAGER APP-\n");
-            printf("\n");
-            usleep(500000);
-            system("clear");
-		
-		
-            printf("\e[?25h");
-		
             while (menu_attempts != 0)
             {
 
@@ -123,7 +85,7 @@ system("clear");
                 getchar();
                 system("clear");
 
-              //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
+                //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
                 if (strcmp(entered_password, main_password) == 0)
                 {
                     if (suspect_bool == 1)
@@ -136,9 +98,9 @@ system("clear");
                         sus_ch = tolower(sus_ch);
                         if (sus_ch == 'y')
                         {
-				system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
-				system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
-				view_suspect_img();
+                            system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
+                            system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+                            view_suspect_img();
 
                             system("chmod 600 .suspect.txt");
                             suspect_bool = 0;
@@ -167,22 +129,19 @@ system("clear");
                     else
                     {
 
-                        // 3 attempts for entering start pin{entered_code_pi}
+                        // 3 attempts for attempting the passwords
 
                     menu:
                         display_menu();
                         printf("Enter your choice [0-4]: ");
                         scanf(" %c", &choose_menu);
-                        // system("clear");
 
                         switch (choose_menu)
                         {
                         case '0':
-                            printf("exiting...\n");
-			    system("chmod 000 .password.txt");
-                            sleep(2);
+                            system("chmod 000 .password.txt");
                             system("clear");
-                            exit(1);
+                            exiting();
                             break;
 
                         case '1':
@@ -191,8 +150,8 @@ system("clear");
                             printf("Edit Dictionary\n\n");
                             printf("  [0] <-- Go back to menu!\n\n");
                             printf("  [1] View Password Dictionary\n");
-                            printf("  [2] Add Password\n");
-                            printf("  [3] Remove Password\n");
+                            printf("  [2] Add Passwords\n");
+                            printf("  [3] Remove Passwords\n");
                             printf("\nEnter your choice [0-3]: ");
                             scanf(" %c", &ch_1);
 
@@ -205,23 +164,24 @@ system("clear");
 
                             case '1':
                                 system("clear");
-
-                                display_passwords();
+                                display_passwords_list();
                                 break;
+
                             case '2':
                                 system("clear");
                                 add_password();
                                 break;
+
                             case '3':
                                 system("clear");
                                 system("chmod 600 .passwords_list.txt");
                                 system("nano .passwords_list.txt");
                                 system("chmod 000 .passwords_list.txt");
                                 break;
-                        
+
                             default:
                                 printf("\nInvalid Input!\n");
-                                sleep(2);
+                                sleep(1);
                                 system("clear");
                                 goto menu_1;
                                 break;
@@ -231,7 +191,6 @@ system("clear");
                             fflush(stdin);
                             scanf(" %c", &go_back);
                             getchar();
-                            // printf("%c", go_back);
                             system("clear");
                             goto menu_1;
                             break;
@@ -240,7 +199,7 @@ system("clear");
                             system("clear");
                             char code[100];
                             printf("Enter the encrypted password: ");
-                            scanf("%s", code);
+                            scanf(" %[^\n]s", code);
                             getchar();
 
                             decrypt_string(code);
@@ -253,8 +212,8 @@ system("clear");
 
                         case '3':
                             system("clear");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
-			    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+                            system("cd /home/$USER/Documents/.program-files/.password-manager && chmod 600 .image.jpeg;");
+                            system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
                             view_suspect_img();
                             goto menu;
                             break;
@@ -269,7 +228,7 @@ system("clear");
                             printf("  [3] Reset App\n");
                             printf("  [4] Update\n");
                             printf("  [5] Developer Mode\n");
-			    printf("  [6] About\n");
+                            printf("  [6] About\n");
                             printf("\nEnter your choice [0-6]: ");
                             scanf(" %c", &ch_4);
 
@@ -287,16 +246,7 @@ system("clear");
 
                             case '2':
                                 system("clear");
-                                system("chmod 400 .password.txt");
-
-                                FILE *ptr;
-                                ptr = fopen(".password.txt", "r");
-                                fscanf(ptr, " %[^\n]s", main_password);
-                                decrypt_string(main_password);
-                                printf("Your current password is: %s\n", main_password);
-                                fclose(ptr);
-                                system("chmod 000 .password.txt");
-
+                                display_current_password();
                                 break;
 
                             case '3':
@@ -320,7 +270,8 @@ system("clear");
                                     printf("\"One Password for All Your Passwords...\"");
                                     printf("\n\n");
                                     sleep(4);
-                                    system("echo ""© 2022 Ayush Ahirrao");
+                                    system("echo "
+                                           "© 2022 Ayush Ahirrao");
                                     sleep(5);
                                     system("clear");
                                     reset();
@@ -335,17 +286,17 @@ system("clear");
                                 break;
 
                             case '4':
-                               system("clear");
+                                system("clear");
                                 system("chmod 700 .password_manager.out");
                                 system("chmod 700 .password_manager.c");
                                 printf("Note:\n");
-            			printf("   1. Do not close the program while updating.\n");
-          			printf("   2. Make sure you have a stable internet connection.\n\n");
-          			printf("Continue [Y/n] : ");
-				scanf(" %c", &choice);
+                                printf("   1. Do not close the program while updating.\n");
+                                printf("   2. Make sure you have a stable internet connection.\n\n");
+                                printf("Continue [Y/n] : ");
+                                scanf(" %c", &ch_update);
                                 system("clear");
 
-                                if (choice == 'y' || choice == 'Y')
+                                if (ch_update == 'y' || ch_update == 'Y')
                                 {
                                     system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
                                     system("echo please wait...");
@@ -357,7 +308,6 @@ system("clear");
                                         system("clear");
                                         printf("Warning: Error while updating\n");
                                         printf("Please check your internet connection!\n");
-					 
                                     }
                                     else
                                     {
@@ -388,117 +338,16 @@ system("clear");
                                 system("nano /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 system("chmod 100 /home/$USER/Documents/.program-files/.password-manager/.password_manager.c");
                                 break;
-					    
-		            case '6':
-			  	printf("\e[?25l");
-					    
-                                printf("-\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-T\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-TH\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE\n");
-            usleep(500000);
-            system("clear");
- 
-            printf("-THE P\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PA\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PAS\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASS\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSW\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWO\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWOR\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD\n");
-            usleep(500000);
-            system("clear");
- 
-            printf("-THE PASSWORD M\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MA\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MAN\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANA\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAG\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGE\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER\n");
-            usleep(500000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER A\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER AP\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER APP\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER APP-\n");
-            usleep(500000);
-            system("clear");
- 
- 
-            printf("-THE PASSWORD MANAGER APP- v\n");
-            usleep(200000);
-            system("clear");
- 
-            printf("-THE PASSWORD MANAGER APP- v1.1\n\n");
-            usleep(700000);
-					    
-			        printf("\e[?25h");
-		
+
+                            case '6':
+
+                                about();
+
                                 break;
 
                             default:
                                 printf("\nInvalid Input!\n");
-                                sleep(2);
+                                sleep(1);
                                 system("clear");
                                 goto menu_4;
                                 break;
@@ -516,7 +365,7 @@ system("clear");
 
                         default:
                             printf("\nInvalid Input!\n");
-                            sleep(2);
+                            sleep(1);
                             system("clear");
                             goto menu;
                             break;
@@ -554,6 +403,7 @@ system("clear");
                     {
                         printf("Forgot password? [Y/n] : ");
                         scanf(" %c", &ch_forgot);
+
                         ch_forgot = tolower(ch_forgot);
                         if (ch_forgot == 'y')
                         {
@@ -569,6 +419,10 @@ system("clear");
                                 printf("\nFailed to reset password!\n");
                             }
                         }
+                        else
+                        {
+                            exiting();
+                        }
                     }
                 }
             }
@@ -580,7 +434,6 @@ system("clear");
 }
 
 // Functions
-
 
 // Adds the new password to .passwords_list
 void add_password()
@@ -616,21 +469,22 @@ void add_password()
         fprintf(ptr, "\n");
 
         printf("\nPassword successfully added to the dictionary!\n");
-		sleep(2);
-		system("clear");
+        sleep(2);
+        system("clear");
         fclose(ptr);
         system("chmod 000 .passwords_list.txt");
         printf("Do you want to add new password? [Y/n]: ");
         scanf("%s", &choose_menu);
+        printf("\n");
     }
 }
 
-// clicks the image with opening new another window
+// clicks the image opening with new window
 void click_img()
 {
     // system("sudo apt install streamer");
     system("streamer -f jpeg -o .image.jpeg -q");
-    //system("mv .image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
+    // system("mv .image.jpeg /home/$USER/Documents/.program-files/.password-manager/");
     system("clear");
 }
 
@@ -657,17 +511,15 @@ void timer(int time)
     system("clear");
 }
 
-void display_passwords()
+// display passwords in list
+void display_passwords_list()
 {
-    system("chmod 444 .passwords_list.txt");
+    system("chmod 400 .passwords_list.txt");
     FILE *ptr;
     ptr = fopen(".passwords_list.txt", "r");
-    // ptr = fopen(".passwords_list.txt", "r");
 
     char whole_string[1000], c;
     int i = 0;
-    // fgets(read_all_passwords, 100, ptr);
-    // puts(read_all_passwords);
 
     while ((c = fgetc(ptr)) != EOF)
     {
@@ -678,38 +530,39 @@ void display_passwords()
     printf("**********************************************************************\n");
     puts(whole_string);
     printf("**********************************************************************\n");
+
+    fclose(ptr);
     system("chmod 000 .passwords_list.txt");
 }
 
-char change_password(char *list_pin)
+// changes current password
+char change_password(char *current_password)
 {
     system("chmod 600 .password.txt");
-    // int *list_pin;
     char new_password[100];
     int attempt = 3;
-    char current_password[100];
+    char entered_current_password[100];
 
     FILE *ptr;
     ptr = fopen(".password.txt", "w");
 
     printf("Warning: Do not close the program while resetting a new password, else the password will set as 0 by default!\n");
-password:
 
+password:
     printf("\nEnter the current password: ");
     // ff/lush(stdin);
-    scanf(" %[^\n]s", current_password);
+    scanf(" %[^\n]s", entered_current_password);
     getchar();
-    // puts(current_password);
-    // puts(list_pin);
+    // puts(entered_current_password);
 
-    // printf("\n********%d********\n", strcmp(current_password, list_pin));
-    if (strcmp(current_password, list_pin) == 0)
+    // printf("\n********%d********\n", strcmp(entered_current_password, current_password));
+    if (strcmp(entered_current_password, current_password) == 0)
     {
         printf("Enter the new password:");
         fflush(stdin);
         scanf(" %[^\n]s", new_password);
         getchar();
-        printf("\nPassword successfully changed to: %s\n", new_password);
+        printf("\nPassword successfully changed to: %s\n\n", new_password);
         encrypt_string(new_password);
         fprintf(ptr, "%s", new_password);
         attempt = 0;
@@ -725,8 +578,8 @@ password:
         }
         else
         {
-            encrypt_string(list_pin);
-            fprintf(ptr, "%s", list_pin);
+            encrypt_string(current_password);
+            fprintf(ptr, "%s", current_password);
         }
     }
 
@@ -734,6 +587,7 @@ password:
     fclose(ptr);
 }
 
+// main menu interface
 void display_menu()
 {
     printf("**************************************************************************\n");
@@ -746,6 +600,7 @@ void display_menu()
     printf("**************************************************************************\n");
 }
 
+// Reads the current password from file
 char read_password(char *main_password)
 {
     system("chmod 600 .password.txt");
@@ -754,16 +609,19 @@ char read_password(char *main_password)
     fscanf(ptr, " %[^\n]s", main_password);
     fclose(ptr);
     decrypt_string(main_password);
-    // printf("%d\n", main_password);
-    return main_password;
+    // printf("%s\n", main_password);
+
+    // return main_password;
     system("chmod 000 .password.txt");
 }
 
+// Check for suspect
 void view_suspect_img()
 {
-system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; fi;");
+    system("cd /home/$USER/Documents/.program-files/.password-manager && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; fi;");
 }
 
+// Installs necessary packages
 void install_packs()
 {
     printf("Installing necessary packages for program\n");
@@ -774,10 +632,11 @@ void install_packs()
     // printf("\nsuccessfully installed necessary packages\n");
 }
 
+// set new password after reset or new login
 void set_new_password()
 {
     system("clear");
-    // system("cd /home/$USER/Downloads/passwords");
+
     system("chmod 600 .password.txt");
     FILE *ptr;
     char new_pin[100];
@@ -791,21 +650,6 @@ void set_new_password()
     fclose(ptr);
     system("chmod 000 .password.txt");
 
-    // system("chmod 600 .dev_key.txt");
-    // FILE *dtr;
-    // char developer_key[100];
-    // dtr = fopen(".dev_key.txt", "w");
-    // printf("\nSetting Developer Key Required!\n");
-    // printf("\nSet Developer Key:");
-    // scanf(" %[^\n]s", developer_key);
-    // getchar();
-    // encrypt_string(developer_key);
-    // fprintf(dtr, "%s", developer_key);
-    // printf("\nDone\n");
-    // sleep(1);
-    // fclose(dtr);
-    // system("chmod 000 .dev_key.txt");
-
     system("chmod 600 .forgot_password.txt");
     FILE *fp;
     fp = fopen(".forgot_password.txt", "w");
@@ -813,6 +657,7 @@ void set_new_password()
     char question1[100];
     char question2[100];
     char question3[100];
+
     system("clear");
 
     printf("Password Recovery Questions;\n\n");
@@ -897,11 +742,13 @@ void set_new_password()
 
     fclose(fp);
     system("chmod 000 .forgot_password.txt");
-    printf("\nDone!\nexiting....\n");
+    printf("\nDone!\n");
+    exiting();
     sleep(1);
     exit(1);
 }
 
+// Reset App
 void reset()
 {
     system("chmod 600 .passwords_list.txt");
@@ -917,7 +764,8 @@ void reset()
     system("chmod 000 .password.txt");
 }
 
-int forgot_password(int *r)       
+// Forgot Password Option
+int forgot_password(int *r)
 {
     system("clear");
     system("chmod 600 .forgot_password.txt");
@@ -1051,6 +899,7 @@ int forgot_password(int *r)
     system("chmod 000 .forgot_password.txt");
 }
 
+// Reset password after forgetting the password
 void reset_password()
 {
     system("clear");
@@ -1073,4 +922,229 @@ void reset_password()
     system("clear");
     fclose(ptr);
     system("chmod 000 .password.txt");
+}
+
+// Displays current password
+void display_current_password()
+{
+    char main_password[100];
+    system("chmod 400 .password.txt");
+
+    FILE *ptr;
+    ptr = fopen(".password.txt", "r");
+    fscanf(ptr, " %[^\n]s", main_password);
+    decrypt_string(main_password);
+    printf("\nYour current password is: %s\n\n", main_password);
+    fclose(ptr);
+    system("chmod 000 .password.txt");
+}
+
+// About/Version animation
+void about()
+{
+    system("clear");
+
+    printf("\e[?25l");
+
+    printf("-\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-T\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-TH\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE P\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PA\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PAS\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASS\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSW\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWO\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWOR\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD M\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MA\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MAN\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANA\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAG\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGE\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER A\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER AP\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP- v\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP- v1\n");
+    usleep(200000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP- v1.1\n");
+    usleep(700000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP- v1.1 (\n");
+    usleep(200000);
+    system("clear");
+ 
+    printf("-THE PASSWORD MANAGER APP- v1.1 (b\n");
+    usleep(200000);
+    system("clear");
+ 
+    printf("-THE PASSWORD MANAGER APP- v1.1 (be\n");
+    usleep(200000);
+    system("clear");
+ 
+    printf("-THE PASSWORD MANAGER APP- v1.1 (bet\n");
+    usleep(200000);
+    system("clear");
+ 
+    printf("-THE PASSWORD MANAGER APP- v1.1 (beta\n");
+    usleep(200000);
+    system("clear");
+ 
+    printf("-THE PASSWORD MANAGER APP- v1.1 (beta)\n\n");
+    usleep(700000);
+
+    printf("\e[?25h");
+}
+
+// starting app animation
+void start()
+{
+    system("clear");
+
+    printf("\e[?25l");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf("\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf(".\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf("..\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf("...\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf(" ..\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf("  .\n");
+    usleep(500000);
+    system("clear");
+
+    printf("-THE PASSWORD MANAGER APP-\n");
+    printf("\n");
+    usleep(500000);
+    system("clear");
+
+    printf("\e[?25h");
+}
+
+// exit animation
+void exiting()
+{
+    system("clear");
+
+    printf("\e[?25l");
+
+    printf("\nexiting\n");
+    usleep(700000);
+    system("clear");
+
+    printf("\nexiting.\n");
+    usleep(700000);
+    system("clear");
+
+    printf("\nexiting..\n");
+    usleep(700000);
+    system("clear");
+
+    printf("\nexiting...\n");
+    usleep(700000);
+
+    printf("\e[?25h");
+    system("clear");
+
+    exit(1);
 }
