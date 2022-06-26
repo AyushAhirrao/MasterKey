@@ -390,6 +390,8 @@ system("clear");
                                 break;
 					    
 		            case '6':
+			  	printf("\e[?25l");
+					    
                                 system("clear");
                                 printf("- \n");
             			usleep(500000);
@@ -417,6 +419,9 @@ system("clear");
 
             			printf("-THE PASSWORD MANAGER APP- v1.1\n\n");
             			usleep(500000);
+					    
+			        printf("\e[?25h");
+		
                                 break;
 
                             default:
