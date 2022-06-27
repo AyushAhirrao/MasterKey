@@ -23,6 +23,7 @@ int forgot_password(int *r);
 void reset_password();
 void about();
 void start();
+void exiting();
 void export_passwords();
 void export_loading();
 
@@ -1174,50 +1175,51 @@ void export_loading()
 {
     printf("\e[?25l");
 
-    printf("Exporting [>                    ]    0%\n");
+    printf("Exporting [>                    ]    0%c \n", 37);
     sleep(1);
     system("clear");
 
-    printf("Exporting [==>                  ]    10%\n");
+    printf("Exporting [==>                  ]    10%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [====>                ]    20%\n");
+    printf("Exporting [====>                ]    20%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [======>              ]    30%\n");
+    printf("Exporting [======>              ]    30%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [========>            ]    40%\n");
+    printf("Exporting [========>            ]    40%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [==========>          ]    50%\n");
+    printf("Exporting [==========>          ]    50%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [============>        ]    60%\n");
+    printf("Exporting [============>        ]    60%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [==============>      ]    70%\n");
+    printf("Exporting [==============>      ]    70%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [================>    ]    80%\n");
+    printf("Exporting [================>    ]    80%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [==================>  ]    90%\n");
+    printf("Exporting [==================>  ]    90%c \n", 37);
     usleep(300000);
     system("clear");
 
-    printf("Exporting [====================>]    100%\n\n");
+    printf("Exporting [====================>]    100%c \n\n", 37);
     usleep(500000);
 
-    printf("Passwords successfully exported to Documents\n\n");
-
     printf("\e[?25h");
+
+    printf("Passwords successfully exported to Documents\n\n");
+    sleep(1);
 }
