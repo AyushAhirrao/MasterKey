@@ -24,6 +24,7 @@ void reset_password();
 void about();
 void start();
 void export_passwords();
+void export_loading();
 
 int main()
 {
@@ -184,8 +185,8 @@ int main()
 
                             case '4':
                                 system("clear");
+                                export_loading();
                                 export_passwords();
-                                printf("Passwords successfully exported to Documents\n\n");
                                 break;
 
                             default:
@@ -948,6 +949,16 @@ void display_current_password()
     system("chmod 000 .password.txt");
 }
 
+// export the passwords_list as txt file
+void export_passwords()
+{
+    system("chmod 700 .passwords_list.txt");
+    system("mv .passwords_list.txt passwords_list.txt");
+    system("cp passwords_list.txt /home/$USER/Documents");
+    system("mv passwords_list.txt .passwords_list.txt");
+    system("chmod 000 .passwords_list.txt");
+}
+
 // About/Version animation
 void about()
 {
@@ -1138,19 +1149,19 @@ void exiting()
     printf("\e[?25l");
 
     printf("\nexiting\n");
-    usleep(700000);
+    usleep(500000);
     system("clear");
 
     printf("\nexiting.\n");
-    usleep(700000);
+    usleep(500000);
     system("clear");
 
     printf("\nexiting..\n");
-    usleep(700000);
+    usleep(500000);
     system("clear");
 
     printf("\nexiting...\n");
-    usleep(700000);
+    usleep(500000);
 
     printf("\e[?25h");
     system("clear");
@@ -1158,11 +1169,55 @@ void exiting()
     exit(1);
 }
 
-void export_passwords()
+// Loading animation
+void export_loading()
 {
-    system("chmod 700 .passwords_list.txt");
-    system("mv .passwords_list.txt passwords_list.txt");
-    system("cp passwords_list.txt /home/$USER/Documents");
-    system("mv passwords_list.txt .passwords_list.txt");
-    system("chmod 000 .passwords_list.txt");
+    printf("\e[?25l");
+
+    printf("Exporting [>                    ]    0%\n");
+    sleep(1);
+    system("clear");
+
+    printf("Exporting [==>                  ]    10%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [====>                ]    20%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [======>              ]    30%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [========>            ]    40%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [==========>          ]    50%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [============>        ]    60%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [==============>      ]    70%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [================>    ]    80%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [==================>  ]    90%\n");
+    usleep(300000);
+    system("clear");
+
+    printf("Exporting [====================>]    100%\n\n");
+    usleep(500000);
+
+    printf("Passwords successfully exported to Documents\n\n");
+
+    printf("\e[?25h");
 }
