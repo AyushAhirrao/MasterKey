@@ -23,6 +23,7 @@ int forgot_password(int *r);
 void reset_password();
 void about();
 void start();
+void export_passwords();
 
 int main()
 {
@@ -73,6 +74,7 @@ int main()
         }
         else
         {
+            system("chmod 000 .password.txt");
 
             start();
 
@@ -152,7 +154,8 @@ int main()
                             printf("  [1] View Password Dictionary\n");
                             printf("  [2] Add Passwords\n");
                             printf("  [3] Remove Passwords\n");
-                            printf("\nEnter your choice [0-3]: ");
+                            printf("  [4] Export Passwords\n");
+                            printf("\nEnter your choice [0-4]: ");
                             scanf(" %c", &ch_1);
 
                             switch (ch_1)
@@ -177,6 +180,12 @@ int main()
                                 system("chmod 600 .passwords_list.txt");
                                 system("nano .passwords_list.txt");
                                 system("chmod 000 .passwords_list.txt");
+                                break;
+
+                            case '4':
+                                system("clear");
+                                export_passwords();
+                                printf("Passwords successfully exported to Documents\n\n");
                                 break;
 
                             default:
@@ -1053,23 +1062,23 @@ void about()
     printf("-THE PASSWORD MANAGER APP- v1.1 (\n");
     usleep(200000);
     system("clear");
- 
+
     printf("-THE PASSWORD MANAGER APP- v1.1 (b\n");
     usleep(200000);
     system("clear");
- 
+
     printf("-THE PASSWORD MANAGER APP- v1.1 (be\n");
     usleep(200000);
     system("clear");
- 
+
     printf("-THE PASSWORD MANAGER APP- v1.1 (bet\n");
     usleep(200000);
     system("clear");
- 
+
     printf("-THE PASSWORD MANAGER APP- v1.1 (beta\n");
     usleep(200000);
     system("clear");
- 
+
     printf("-THE PASSWORD MANAGER APP- v1.1 (beta)\n\n");
     usleep(700000);
 
@@ -1147,4 +1156,13 @@ void exiting()
     system("clear");
 
     exit(1);
+}
+
+void export_passwords()
+{
+    system("chmod 700 .passwords_list.txt");
+    system("mv .passwords_list.txt passwords_list.txt");
+    system("cp passwords_list.txt /home/$USER/Documents");
+    system("mv passwords_list.txt .passwords_list.txt");
+    system("chmod 000 .passwords_list.txt");
 }
