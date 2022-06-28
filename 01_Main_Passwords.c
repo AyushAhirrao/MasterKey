@@ -26,6 +26,7 @@ void start();
 void exiting();
 void export_passwords();
 void export_loading();
+void please_wait();
 
 int main()
 {
@@ -237,7 +238,7 @@ int main()
                             printf("  [1] Change Password\n");
                             printf("  [2] Display Current Password\n");
                             printf("  [3] Reset App\n");
-                            printf("  [4] Update\n");
+                            printf("  [4] Check for updates\n");
                             printf("  [5] Developer Mode\n");
                             printf("  [6] About\n");
                             printf("\nEnter your choice [0-6]: ");
@@ -297,50 +298,10 @@ int main()
                                 break;
 
                             case '4':
+                                // update
                                 system("clear");
-                                system("chmod 700 .password_manager.out");
-                                system("chmod 700 .password_manager.c");
-                                printf("Note:\n");
-                                printf("   1. Do not close the program while updating.\n");
-                                printf("   2. Make sure you have a stable internet connection.\n\n");
-                                printf("Continue [Y/n] : ");
-                                scanf(" %c", &ch_update);
-                                system("clear");
-
-                                if (ch_update == 'y' || ch_update == 'Y')
-                                {
-                                    system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && wget https://github.com/ayush2030/password_manager/blob/main/01_Main_Passwords.c?raw=true");
-                                    system("echo please wait...");
-                                    sleep(20);
-                                    FILE *upd;
-                                    upd = fopen("01_Main_Passwords.c?raw=true", "r");
-                                    if (upd == NULL)
-                                    {
-                                        system("clear");
-                                        printf("Warning: Error while updating\n");
-                                        printf("Please check your internet connection!\n");
-                                    }
-                                    else
-                                    {
-
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.c");
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && mv 01_Main_Passwords.c?raw=true .password_manager.c");
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && rm .password_manager.out");
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && gcc .password_manager.c -o .password_manager.out");
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 700 .password_manager.out");
-                                        system("cd ~ && cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 000 .password_manager.c");
-                                        system("clear");
-                                        printf("App successfully updated!\n");
-                                        system("chmod 700 .password_manager.out");
-                                        system("chmod 100 .password_manager.c");
-                                        sleep(3);
-                                        system("pkill terminal");
-                                    }
-                                }
-                                else
-                                {
-                                    goto menu_4;
-                                }
+                                please_wait();
+                                system("cd /home/$USER/Documents/.program-files/.password-manager/ && chmod 500 .update.sh && bash .update.sh");
                                 break;
 
                             case '5':
@@ -1106,37 +1067,37 @@ void start()
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf("\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf(".\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf("..\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf("...\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf(" ..\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf("  .\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("-THE PASSWORD MANAGER APP-\n");
     printf("\n");
-    usleep(500000);
+    usleep(250000);
     system("clear");
 
     printf("\e[?25h");
@@ -1149,20 +1110,8 @@ void exiting()
 
     printf("\e[?25l");
 
-    printf("\nexiting\n");
-    usleep(500000);
-    system("clear");
-
-    printf("\nexiting.\n");
-    usleep(500000);
-    system("clear");
-
-    printf("\nexiting..\n");
-    usleep(500000);
-    system("clear");
-
     printf("\nexiting...\n");
-    usleep(500000);
+    sleep(1);
 
     printf("\e[?25h");
     system("clear");
@@ -1222,4 +1171,41 @@ void export_loading()
 
     printf("Passwords successfully exported to Documents\n\n");
     sleep(1);
+}
+
+void please_wait()
+{
+    system("clear");
+
+    printf("\e[?25l");
+
+    printf("Checking for updates\nPlease wait\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait.\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait..\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait...\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait ..\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait  .\n");
+    usleep(250000);
+    system("clear");
+
+    printf("Checking for updates\nPlease wait\n\n");
+    usleep(250000);
+    // system("clear");
+
+    printf("\e[?25h");
 }
