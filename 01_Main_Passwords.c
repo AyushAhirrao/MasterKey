@@ -924,133 +924,133 @@ void export_passwords()
 // About/Version animation
 void about()
 {
-    system("clear");
+    system("cls");
 
     printf("\e[?25l");
 
     printf("-\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-T\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-TH\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE\n");
-    usleep(500000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE P\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PA\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PAS\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASS\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSW\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWO\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWOR\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD\n");
-    usleep(500000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD M\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MA\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MAN\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANA\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAG\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGE\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER\n");
-    usleep(500000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER A\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER AP\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP-\n");
-    usleep(500000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1\n");
-    usleep(700000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (b\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (be\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (bet\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (beta\n");
-    usleep(200000);
-    system("clear");
+    usleep(100000);
+    system("cls");
 
     printf("-THE PASSWORD MANAGER APP- v1.1 (beta)\n\n");
     usleep(700000);
