@@ -1,4 +1,4 @@
-// Password_Manager_v1.1 (beta)
+// Password_Manager_v1.1 (beta) 
 
 #include <stdio.h>
 #include <stdlib.h>
