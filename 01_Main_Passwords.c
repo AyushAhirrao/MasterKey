@@ -1,4 +1,4 @@
-// Password_Manager_v1.1 (beta) 
+// Password_Manager_v1.1 (beta)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +12,7 @@ void click_img();
 void timer(int time);
 void display_passwords_list();
 void display_current_password();
+void search_password();
 char change_password(char *current_password);
 void display_menu();
 char read_password(char *main_password);
@@ -154,10 +155,11 @@ int main()
                             system("clear");
                             printf("Edit Dictionary\n\n");
                             printf("  [0] <-- Go back to menu!\n\n");
-                            printf("  [1] View Password Dictionary\n");
-                            printf("  [2] Add Passwords\n");
-                            printf("  [3] Remove Passwords\n");
-                            printf("  [4] Export Passwords\n");
+                            printf("  [1] Search Password\n");
+                            printf("  [2] View Passwords\n");
+                            printf("  [3] Add Passwords\n");
+                            printf("  [4] Remove Passwords\n");
+                            printf("  [5] Export Passwords\n");
                             printf("\nEnter your choice [0-4]: ");
                             scanf(" %c", &ch_1);
 
@@ -170,22 +172,27 @@ int main()
 
                             case '1':
                                 system("clear");
-                                display_passwords_list();
+                                search_password();
                                 break;
 
                             case '2':
                                 system("clear");
-                                add_password();
+                                display_passwords_list();
                                 break;
 
                             case '3':
+                                system("clear");
+                                add_password();
+                                break;
+
+                            case '4':
                                 system("clear");
                                 system("chmod 600 .passwords_list.txt");
                                 system("nano .passwords_list.txt");
                                 system("chmod 000 .passwords_list.txt");
                                 break;
 
-                            case '4':
+                            case '5':
                                 system("clear");
                                 export_loading();
                                 export_passwords();
@@ -507,6 +514,51 @@ void display_passwords_list()
     system("chmod 000 .passwords_list.txt");
 }
 
+void search_password()
+{
+    system("chmod 400 .passwords_list.txt");
+    char passwords_list[5000];
+
+    int ctr = 0;
+    char search[100];
+
+    FILE *ptr;
+
+    ptr = fopen(".passwords_list.txt", "r");
+
+    char c;
+    int i = 0;
+
+    while ((c = fgetc(ptr)) != EOF)
+    {
+        passwords_list[i] = c;
+        i++;
+    }
+    passwords_list[i] = '\0';
+    fclose(ptr);
+
+    printf("Search for password: ");
+    scanf(" %s", search);
+
+    char *res = strstr(passwords_list, search);
+
+    if (res)
+    {
+        printf("\nMatched Password: ");
+        while (isprint(res[ctr]))
+        {
+            putchar(res[ctr]);
+            ctr++;
+        }
+        printf("\n\n");
+    }
+    else
+    {
+        printf("\nTheir is no such password available\n\n");
+    }
+    system("chmod 000 .passwords_list.txt");
+}
+
 // changes current password
 char change_password(char *current_password)
 {
@@ -564,7 +616,7 @@ void display_menu()
 {
     printf("**************************************************************************\n");
     printf("Menu:\n");
-    printf("[1] Edit Dictionary \n");
+    printf("[1] Passwords \n");
     printf("[2] Decrypt password\n");
     printf("[3] View Suspect's Picture\n");
     printf("[4] Settings\n");
@@ -1209,3 +1261,4 @@ void please_wait()
 
     printf("\e[?25h");
 }
+
