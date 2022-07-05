@@ -118,8 +118,8 @@ int main()
                             fprintf(suspect, "%d", suspect_bool);
                             fclose(suspect);
                             system("chmod 000 .suspect.txt");
-                            goto goback;
                             system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
+                            goto goback;
                             system("clear");
 
                         }
