@@ -111,7 +111,7 @@ int main()
                             system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
                             system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else clear; echo Error: image not captured; echo You might not have a camera configured to your system; echo ; fi;");
                             
-                                view_suspect_img();
+                            view_suspect_img();
                             system("chmod 600 .suspect.txt");
                             suspect_bool = 0;
                             suspect = fopen(".suspect.txt", "w");
@@ -1335,7 +1335,6 @@ void export_loading()
 
     printf("\e[?25h");
 
-    printf("Passwords successfully exported to Documents\n\n");
     system("echo Passwords successfully exported to /home/$USER/Documents/passwords_list.txt ");
 
     sleep(1);
