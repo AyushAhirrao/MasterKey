@@ -52,7 +52,7 @@ int main()
     char choose_menu; // main menu
     char go_back;
     char ch_reset, ch_forgot, ch_update;
-    char ch_3, ch_3_4, ch_5;
+    char ch_3, ch_3_4, ch_5, ch_uninstall;
 
     // suspect warning
     system("chmod 600 .suspect.txt");
@@ -110,7 +110,7 @@ int main()
                         {
                             system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
                             system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else clear; echo Error: image not captured; echo You might not have a camera configured to your system; echo ; fi;");
-                            
+
                             view_suspect_img();
                             system("chmod 600 .suspect.txt");
                             suspect_bool = 0;
@@ -121,7 +121,6 @@ int main()
                             system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
                             goto goback;
                             system("clear");
-
                         }
                         else if (sus_ch == 'n')
                         {
@@ -297,6 +296,7 @@ int main()
                             printf("  [2] Display current key\n");
                             printf("  [3] Reset App\n");
                             printf("  [4] Check for updates\n");
+                            printf("  [5] Uninstall MasterKey App\n");
                             // printf("  [5] About\n");
                             // printf("  [5] Developer Mode\n");
                             printf("\nEnter your choice [0-5]: ");
@@ -359,6 +359,47 @@ int main()
                                 system("clear");
                                 check_for_update();
                                 system("cd /home/$USER/Documents/.Program-Files/.MasterKey/ && chmod 500 .update.sh && bash .update.sh");
+                                break;
+
+                            case '5':
+                                system("clear");
+                                printf("Note: Deleting app will clear all your app data, MasterKey program files and packages from your system\n");
+                                printf("\nIf you will be reinstalling the app in future make sure to backup your data by exporting the passwords from - \n\"[3]Edit dictionary > [4]Backup & Restore > [1]Export passwords\".\n");
+                                printf("\n\nAre you sure you want to continue [Y/n] : ");
+                                scanf(" %c", &ch_uninstall);
+
+                                ch_uninstall = tolower(ch_uninstall);
+
+                                if (ch_uninstall == 'y')
+                                {
+                                    system("sudo rm /usr/include/stded.h");
+                                    system("clear");
+                                    system("echo We're sorry to see you go!");
+                                    sleep(3);
+                                    system("echo && echo Deleting MasterKey program files...");
+                                    sleep(3);
+                                    system("sed -i -e '/masterkey/d' /home/$USER/.bashrc");
+                                    system("clear");
+                                    system("rm /home/$USER/.run_masterkey.sh");
+                                    system("clear");
+                                    system("rm -rf /home/$USER/Documents/.Program-Files");
+                                    system("echo && echo deleting installed packages...");
+                                    sleep(3);
+                                    system("sudo apt --purge remove streamer -f -y &");
+                                    system("sudo apt --purge remove feh -f -y &");
+                                    sleep(1);
+                                    system("clear");
+                                    sleep(1);
+                                    system("echo && echo App successfully uninstalled!");
+                                    sleep(3);
+                                    system("clear");
+                                    exit(1);
+                                }
+                                else
+                                {
+                                    goto menu_4;
+                                }
+
                                 break;
 
                                 // case '5':
