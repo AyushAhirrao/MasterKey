@@ -363,8 +363,8 @@ int main()
 
                             case '5':
                                 system("clear");
-                                printf("Note: Deleting app will clear all your app data, MasterKey program files and packages from your system\n");
-                                printf("\nIf you will be reinstalling the app in future make sure to backup your data by exporting the passwords from - \n\"[3]Edit dictionary > [4]Backup & Restore > [1]Export passwords\".\n");
+                                printf("Note: Deleting the app will clear all your app data, MasterKey program files and packages from your system\n");
+                                printf("\nIf you will be reinstalling the app in future make sure to backup your data by exporting the passwords from - \n[3]Edit dictionary > [4]Backup & Restore > [1]Export passwords.\n");
                                 printf("\n\nAre you sure you want to continue [Y/n] : ");
                                 scanf(" %c", &ch_uninstall);
 
