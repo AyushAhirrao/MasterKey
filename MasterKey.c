@@ -329,18 +329,19 @@ int main()
 
                                 if (ch_reset == 'y')
                                 {
-                                    printf("Reseting...\n");
+                                    system("clear");
+                                    system("echo Reseting...");
                                     sleep(3);
                                     system("clear");
                                     sleep(2);
-                                    system("echo \"Hi $USER, Welcome to the Password Manager App\"");
+                                    system("echo \"Hi $USER, Welcome to the MasterKey App\"");
                                     printf("\n");
                                     sleep(1);
-                                    printf("THE PASSWORD MANAGER APP\n");
+                                    printf("The MasterKey App\n");
                                     printf("\"One Password for All Your Passwords...\"");
                                     printf("\n\n");
                                     sleep(4);
-                                    system("echo © 2022 Ayush Ahirrao");
+                                    system("echo © 2022 The Sudo Club");
                                     sleep(5);
                                     system("clear");
                                     reset();
