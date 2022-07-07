@@ -43,7 +43,7 @@ int main()
     // sleep(3);
 
     // user entered pins
-    char entered_password[100];
+    char *entered_password;
 
     // attempts
     int menu_attempts = 3;
@@ -87,11 +87,7 @@ int main()
 
             while (menu_attempts != 0)
             {
-
-                printf("Enter your key: ");
-                fflush(stdin);
-                scanf(" %[^\n]s", entered_password);
-                getchar();
+                entered_password = getpass("Enter a key:  ");
                 system("clear");
 
                 //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
@@ -119,6 +115,7 @@ int main()
                             fclose(suspect);
                             system("chmod 000 .suspect.txt");
                             system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
+                            printf("\n");
                             goto goback;
                             system("clear");
                         }
@@ -654,9 +651,9 @@ void search_password()
 char change_password(char *current_password)
 {
     system("chmod 600 .password.txt");
-    char new_password[100];
+    char *new_password;
     int attempt = 3;
-    char entered_current_password[100];
+    char *entered_current_password;
 
     FILE *ptr;
     ptr = fopen(".password.txt", "w");
@@ -664,19 +661,13 @@ char change_password(char *current_password)
     printf("Warning: Do not close the program while resetting the key!\n");
 
 password:
-    printf("\nEnter the current key: ");
-    // ff/lush(stdin);
-    scanf(" %[^\n]s", entered_current_password);
-    getchar();
+    entered_current_password = getpass("\nEnter the current key: ");
     // puts(entered_current_password);
 
     // printf("\n********%d********\n", strcmp(entered_current_password, current_password));
     if (strcmp(entered_current_password, current_password) == 0)
     {
-        printf("Enter a new key:");
-        fflush(stdin);
-        scanf(" %[^\n]s", new_password);
-        getchar();
+        new_password = getpass("Enter a new key: ");
         printf("\nMaster key successfully changed to: %s\n\n", new_password);
         encrypt_string(new_password);
         fprintf(ptr, "%s", new_password);
@@ -755,11 +746,10 @@ void set_new_password()
 
     system("chmod 600 .password.txt");
     FILE *ptr;
-    char new_pin[100];
+    char *new_pin;
     ptr = fopen(".password.txt", "w");
     printf("Set a master key for your passwords !\n\n");
-    printf("Enter a key: ");
-    scanf(" %[^\n]s", new_pin);
+    new_pin = getpass("Enter a key: ");
     encrypt_string(new_pin);
     fprintf(ptr, "%s", new_pin);
     sleep(1);
@@ -1022,14 +1012,13 @@ void reset_password()
     // system("cd /home/$USER/Downloads/passwords");
     system("chmod 600 .password.txt");
     FILE *ptr;
-    char new_pin[100];
+    char *new_pin;
     ptr = fopen(".password.txt", "w");
-    printf("Setting Password Required !\n\n");
-    printf("Enter the new password: ");
-    scanf(" %[^\n]s", new_pin);
+    printf("Setting Key Required !\n\n");
+    new_pin = getpass("Enter a new key: ");
     encrypt_string(new_pin);
     fprintf(ptr, "%s", new_pin);
-    printf("Setting new password...\n");
+    printf("\nSetting new password...\n");
     sleep(1);
     system("echo Done!");
     printf("\n");
