@@ -1,4 +1,4 @@
-// Password_Manager_v1.1 (beta)
+// MasterKey v1.1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
-// #include <ayush.h>
+#include <time.h>
 
 void add_password();
 void click_img();
@@ -31,6 +31,7 @@ void import_passwords();
 void export_loading();
 void check_for_update();
 void please_wait();
+void try_again();
 
 int main()
 {
@@ -53,6 +54,7 @@ int main()
     char go_back;
     char ch_reset, ch_forgot, ch_update;
     char ch_3, ch_3_4, ch_5, ch_uninstall;
+    int limit;
 
     // suspect warning
     system("chmod 600 .suspect.txt");
@@ -68,191 +70,258 @@ int main()
     FILE *fp;
     fp = fopen(".password.txt", "r");
 
-    if (NULL != fp)
+    // check for timer
+    FILE *lim;
+    system("chmod 600 .limit.txt");
+    lim = fopen(".limit.txt", "r");
+    system("chmod 000 .limit.txt");
+    fscanf(lim, "%d", &limit);
+    fclose(lim);
+
+    if (limit > 5)
     {
-        fseek(fp, 0, SEEK_END);
-        int size = ftell(fp);
+        system("clear");
+        system("echo Too many invalid attempts");
+        sleep(1);
+        system("clear");
 
-        if (0 == size)
+        try_again();
+
+        // setting limit 0
+        FILE *lim;
+        limit = 0;
+        system("chmod 600 .limit.txt");
+        lim = fopen(".limit.txt", "w");
+        system("chmod 000 .limit.txt");
+        fprintf(lim, "%d", limit);
+        fclose(lim);
+
+        goto enter_pass;
+    }
+    else
+    {
+
+        if (NULL != fp)
         {
-        startup:
-            set_new_password();
-            system("chmod 000 .password.txt");
-        }
-        else
-        {
-            system("chmod 000 .password.txt");
+            fseek(fp, 0, SEEK_END);
+            int size = ftell(fp);
 
-            start();
-
-            while (menu_attempts != 0)
+            if (0 == size)
             {
-                entered_password = getpass("Enter a key:  ");
-                system("clear");
+            startup:
+                set_new_password();
+                system("chmod 000 .password.txt");
+            }
+            else
+            {
+                system("chmod 000 .password.txt");
 
-                //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
-                if (strcmp(entered_password, main_password) == 0)
+                start();
+
+                while (menu_attempts != 0)
                 {
-                    if (suspect_bool == 1)
+
+                enter_pass:
+                    // timestamp
+                    system("chmod 600 .time.txt");
+                    FILE *t_stamp;
+                    char timestamp[100];
+                    t_stamp = fopen(".time.txt", "r");
+                    fgets(timestamp, 30, t_stamp);
+                    fclose(t_stamp);
+                    system("chmod 000 .time.txt");
+
+                    entered_password = getpass("Enter a key:  ");
+                    system("clear");
+
+                    //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
+                    if (strcmp(entered_password, main_password) == 0)
                     {
-                    warning:
-                        char sus_ch;
-                        printf("Warning: There was an invalid login attempt, view suspect's image?\n");
-                        printf("Continue [Y/n] : ");
-                        scanf(" %c", &sus_ch);
-                        getchar();
-                        sus_ch = tolower(sus_ch);
-                        if (sus_ch == 'y')
-                        {
-                            system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
-                            system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else clear; echo Error: image not captured; echo You might not have a camera configured to your system; echo ; fi;");
+                        // setting limit 0
+                        FILE *lim;
+                        limit = 0;
+                        system("chmod 600 .limit.txt");
+                        lim = fopen(".limit.txt", "w");
+                        system("chmod 000 .limit.txt");
+                        fprintf(lim, "%d", limit);
+                        fclose(lim);
 
-                            view_suspect_img();
-                            system("chmod 600 .suspect.txt");
-                            suspect_bool = 0;
-                            suspect = fopen(".suspect.txt", "w");
-                            fprintf(suspect, "%d", suspect_bool);
-                            fclose(suspect);
-                            system("chmod 000 .suspect.txt");
-                            system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
-                            printf("\n");
-                            goto goback;
-                            system("clear");
-                        }
-                        else if (sus_ch == 'n')
+                        if (suspect_bool == 1)
                         {
-                            system("clear");
-                            suspect_bool = 0;
-                            system("chmod 600 .suspect.txt");
-                            FILE *suspect;
-                            suspect = fopen(".suspect.txt", "w");
-                            fprintf(suspect, "%d", suspect_bool);
-                            fclose(suspect);
-                            system("chmod 000 .suspect.txt");
-                            system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
+                        warning:
+                            char sus_ch;
+                            printf("Warning: There was an invalid login attempt, view suspect's image?\n");
+                            printf("Time: %s\n", timestamp);
+                            printf("Continue [Y/n] : ");
+                            scanf(" %c", &sus_ch);
+                            getchar();
+                            sus_ch = tolower(sus_ch);
+                            if (sus_ch == 'y')
+                            {
+                                system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
+                                system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else clear; echo Error: image not captured; echo You might not have a camera configured to your system; echo ; fi;");
 
-                            goto menu;
+                                view_suspect_img();
+                                system("chmod 600 .suspect.txt");
+                                suspect_bool = 0;
+                                suspect = fopen(".suspect.txt", "w");
+                                fprintf(suspect, "%d", suspect_bool);
+                                fclose(suspect);
+                                system("chmod 000 .suspect.txt");
+                                system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
+                                printf("\n");
+                                goto goback;
+                                system("clear");
+                            }
+                            else if (sus_ch == 'n')
+                            {
+                                system("clear");
+                                suspect_bool = 0;
+                                system("chmod 600 .suspect.txt");
+                                FILE *suspect;
+                                suspect = fopen(".suspect.txt", "w");
+                                fprintf(suspect, "%d", suspect_bool);
+                                fclose(suspect);
+                                system("chmod 000 .suspect.txt");
+                                system("rm /home/$USER/Documents/.Program-Files/.MasterKey/.image.jpeg");
+
+                                goto menu;
+                            }
+                            else
+                            {
+
+                                system("echo && echo Invalid Input");
+                                sleep(1);
+                                system("clear");
+                                goto warning;
+                            }
                         }
                         else
                         {
 
-                            system("echo && echo Invalid Input");
-                            sleep(1);
-                            system("clear");
-                            goto warning;
-                        }
-                    }
-                    else
-                    {
+                            // 3 attempts for attempting the passwords
+                        menu:
+                            display_menu();
+                            printf("Enter your choice [0-5]: ");
+                            scanf(" %c", &choose_menu);
 
-                        // 3 attempts for attempting the passwords
-
-                    menu:
-                        display_menu();
-                        printf("Enter your choice [0-5]: ");
-                        scanf(" %c", &choose_menu);
-
-                        switch (choose_menu)
-                        {
-                        case '0':
-                            system("chmod 000 .password.txt");
-                            system("clear");
-                            exiting();
-                            break;
-
-                        case '1':
-                            system("clear");
-                            search_password();
-                            break;
-
-                        case '2':
-                            system("clear");
-                            char code[100];
-                            printf("Enter the encrypted password: ");
-                            scanf(" %[^\n]s", code);
-                            getchar();
-
-                            decrypt_string(code);
-
-                            printf("The decrypted password is: ");
-                            puts(code);
-                            printf("\n");
-
-                            break;
-                        case '3':
-                        menu_3:
-                            system("clear");
-                            printf("Edit Dictionary\n\n");
-                            printf("  [0] <-- Go back to menu!\n\n");
-                            printf("  [1] View Passwords\n");
-                            printf("  [2] Add Passwords\n");
-                            printf("  [3] Remove Passwords\n");
-                            printf("  [4] Backup & Restore\n");
-                            printf("\nEnter your choice [0-4]: ");
-                            scanf(" %c", &ch_3);
-
-                            switch (ch_3)
+                            switch (choose_menu)
                             {
                             case '0':
+                                system("chmod 000 .password.txt");
                                 system("clear");
-                                goto menu;
+                                exiting();
                                 break;
 
                             case '1':
                                 system("clear");
-                                display_passwords_list();
+                                search_password();
                                 break;
 
                             case '2':
                                 system("clear");
-                                add_password();
-                                break;
+                                char code[100];
+                                printf("Enter the encrypted password: ");
+                                scanf(" %[^\n]s", code);
+                                getchar();
 
+                                decrypt_string(code);
+
+                                printf("The decrypted password is: ");
+                                puts(code);
+                                printf("\n");
+
+                                break;
                             case '3':
-                                system("clear");
-                                system("chmod 600 .passwords_list.txt");
-                                system("nano .passwords_list.txt");
-                                system("chmod 000 .passwords_list.txt");
-                                break;
-
-                            case '4':
-                            menu_3_4:
+                            menu_3:
                                 system("clear");
                                 printf("Edit Dictionary\n\n");
-                                printf("  [0] <-- Go back\n\n");
-                                printf("  [1] Import Passwords\n");
-                                printf("  [2] Export Passwords\n");
-                                printf("\nEnter your choice [0-2]: ");
-                                scanf(" %c", &ch_3_4);
+                                printf("  [0] <-- Go back to menu!\n\n");
+                                printf("  [1] View Passwords\n");
+                                printf("  [2] Add Passwords\n");
+                                printf("  [3] Remove Passwords\n");
+                                printf("  [4] Backup & Restore\n");
+                                printf("\nEnter your choice [0-4]: ");
+                                scanf(" %c", &ch_3);
 
-                                switch (ch_3_4)
+                                switch (ch_3)
                                 {
                                 case '0':
                                     system("clear");
-                                    goto menu_3;
+                                    goto menu;
                                     break;
 
                                 case '1':
                                     system("clear");
-                                    import_passwords();
+                                    display_passwords_list();
                                     break;
 
                                 case '2':
                                     system("clear");
-                                    export_loading();
-                                    export_passwords();
+                                    add_password();
+                                    break;
 
+                                case '3':
+                                    system("clear");
+                                    system("chmod 600 .passwords_list.txt");
+                                    system("nano .passwords_list.txt");
+                                    system("chmod 000 .passwords_list.txt");
+                                    break;
+
+                                case '4':
+                                menu_3_4:
+                                    system("clear");
+                                    printf("Edit Dictionary\n\n");
+                                    printf("  [0] <-- Go back\n\n");
+                                    printf("  [1] Import Passwords\n");
+                                    printf("  [2] Export Passwords\n");
+                                    printf("\nEnter your choice [0-2]: ");
+                                    scanf(" %c", &ch_3_4);
+
+                                    switch (ch_3_4)
+                                    {
+                                    case '0':
+                                        system("clear");
+                                        goto menu_3;
+                                        break;
+
+                                    case '1':
+                                        system("clear");
+                                        import_passwords();
+                                        break;
+
+                                    case '2':
+                                        system("clear");
+                                        export_loading();
+                                        export_passwords();
+
+                                        break;
+
+                                    default:
+                                        printf("\nInvalid Input!\n");
+                                        sleep(1);
+                                        system("clear");
+                                        goto menu_3_4;
+                                        break;
+                                    }
+
+                                    printf("\n<-- Go back! [Y] : ");
+                                    fflush(stdin);
+                                    scanf(" %c", &go_back);
+                                    getchar();
+                                    system("clear");
+                                    goto menu_3;
                                     break;
 
                                 default:
                                     printf("\nInvalid Input!\n");
                                     sleep(1);
                                     system("clear");
-                                    goto menu_3_4;
+                                    goto menu_3;
                                     break;
                                 }
 
-                                printf("\n<-- Go back! [Y] : ");
+                                printf("<-- Go back! [Y] : ");
                                 fflush(stdin);
                                 scanf(" %c", &go_back);
                                 getchar();
@@ -260,236 +329,245 @@ int main()
                                 goto menu_3;
                                 break;
 
+                                // case '4':
+                                //     system("clear");
+                                //     system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
+                                //     system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
+                                //     view_suspect_img();
+                                //     goto menu;
+                                //     break;
+
+                            case '4':
+                            menu_4:
+                                system("clear");
+                                printf("Settings:\n\n");
+                                printf("  [0] <-- Go back to menu!\n\n");
+                                printf("  [1] Change master key\n");
+                                printf("  [2] Display current key\n");
+                                printf("  [3] Reset App\n");
+                                printf("  [4] Check for updates\n");
+                                printf("  [5] Uninstall MasterKey App\n");
+                                // printf("  [5] About\n");
+                                // printf("  [5] Developer Mode\n");
+                                printf("\nEnter your choice [0-5]: ");
+                                scanf(" %c", &ch_5);
+
+                                switch (ch_5)
+                                {
+                                case '0':
+                                    system("clear");
+                                    goto menu;
+                                    break;
+
+                                case '1':
+                                    system("clear");
+                                    change_password(main_password);
+                                    break;
+
+                                case '2':
+                                    system("clear");
+                                    display_current_password();
+                                    break;
+
+                                case '3':
+                                    system("clear");
+                                    printf("Note: Resetting the app will delete all your data like stored passwords, cashed images, etc.");
+                                    printf("\n\nAre you sure you want to continue? [Y/n] : ");
+                                    scanf(" %c", &ch_reset);
+                                    getchar();
+                                    ch_reset = tolower(ch_reset);
+
+                                    if (ch_reset == 'y')
+                                    {
+                                        system("clear");
+                                        system("echo Reseting...");
+                                        sleep(3);
+                                        system("clear");
+                                        sleep(2);
+                                        system("echo \"Hi $USER, Welcome to the MasterKey App\"");
+                                        printf("\n");
+                                        sleep(1);
+                                        printf("The MasterKey App\n");
+                                        printf("\"One Password for All Your Passwords...\"");
+                                        printf("\n\n");
+                                        sleep(4);
+                                        system("echo © 2022 The Sudo Club");
+                                        sleep(5);
+                                        system("clear");
+                                        reset();
+                                        printf("Done\n");
+                                        system("clear");
+                                        goto startup;
+                                    }
+                                    else
+                                    {
+                                        printf("\nAbort!\n");
+                                    }
+                                    break;
+
+                                case '4':
+                                    // update
+                                    system("clear");
+                                    check_for_update();
+                                    system("cd /home/$USER/Documents/.Program-Files/.MasterKey/ && chmod 500 .update.sh && bash .update.sh");
+                                    break;
+
+                                case '5':
+                                    system("clear");
+                                    printf("Note: Deleting the app will clear all your app data, MasterKey program files and packages from your system\n");
+                                    printf("\nIf you will be reinstalling the app in future make sure to backup your data by exporting the passwords from - \n[3]Edit dictionary > [4]Backup & Restore > [1]Export passwords.\n");
+                                    printf("\n\nAre you sure you want to continue [Y/n] : ");
+                                    scanf(" %c", &ch_uninstall);
+
+                                    ch_uninstall = tolower(ch_uninstall);
+
+                                    if (ch_uninstall == 'y')
+                                    {
+                                        system("sudo rm /usr/include/stded.h");
+                                        system("clear");
+                                        system("echo We're sorry to see you go!");
+                                        sleep(3);
+                                        system("echo && echo Deleting MasterKey program files...");
+                                        sleep(3);
+                                        system("sed -i -e '/masterkey/d' /home/$USER/.bashrc");
+                                        system("clear");
+                                        system("rm /home/$USER/.run_masterkey.sh");
+                                        system("clear");
+                                        system("rm -rf /home/$USER/Documents/.Program-Files");
+                                        system("echo && echo deleting installed packages...");
+                                        sleep(3);
+                                        system("sudo apt --purge remove streamer -f -y &");
+                                        system("sudo apt --purge remove feh -f -y &");
+                                        sleep(1);
+                                        system("clear");
+                                        sleep(1);
+                                        system("echo && echo App successfully uninstalled!");
+                                        sleep(3);
+                                        system("clear");
+                                        exit(1);
+                                    }
+                                    else
+                                    {
+                                        goto menu_4;
+                                    }
+
+                                    break;
+
+                                    // case '5':
+                                    //     system("clear");
+                                    //     system("chmod 400 /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
+                                    //     system("nano /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
+                                    //     system("chmod 100 /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
+                                    //     break;
+
+                                    // case '5':
+
+                                    //     about();
+
+                                    //     break;
+
+                                default:
+                                    printf("\nInvalid Input!\n");
+                                    sleep(1);
+                                    system("clear");
+                                    goto menu_4;
+                                    break;
+                                }
+
+                                printf("<-- Go back! [Y] : ");
+                                fflush(stdin);
+                                scanf("%c", &go_back);
+                                getchar();
+                                // printf("%c", go_back);
+                                system("clear");
+                                goto menu_4;
+
+                                break;
+
                             default:
                                 printf("\nInvalid Input!\n");
                                 sleep(1);
-                                system("clear");
-                                goto menu_3;
-                                break;
-                            }
-
-                            printf("<-- Go back! [Y] : ");
-                            fflush(stdin);
-                            scanf(" %c", &go_back);
-                            getchar();
-                            system("clear");
-                            goto menu_3;
-                            break;
-
-                            // case '4':
-                            //     system("clear");
-                            //     system("cd /home/$USER/Documents/.Program-Files/.MasterKey && chmod 600 .image.jpeg;");
-                            //     system("cd /home/$USER/Documents/.Program-Files/.MasterKey && if [ -f .image.jpeg ]; then chmod 600 .image.jpeg; feh .image.jpeg; else echo Error: image not captured; echo There was no invalid login attempt yet or you might not have a camera configured to your system; echo ; fi;");
-                            //     view_suspect_img();
-                            //     goto menu;
-                            //     break;
-
-                        case '4':
-                        menu_4:
-                            system("clear");
-                            printf("Settings:\n\n");
-                            printf("  [0] <-- Go back to menu!\n\n");
-                            printf("  [1] Change master key\n");
-                            printf("  [2] Display current key\n");
-                            printf("  [3] Reset App\n");
-                            printf("  [4] Check for updates\n");
-                            printf("  [5] Uninstall MasterKey App\n");
-                            // printf("  [5] About\n");
-                            // printf("  [5] Developer Mode\n");
-                            printf("\nEnter your choice [0-5]: ");
-                            scanf(" %c", &ch_5);
-
-                            switch (ch_5)
-                            {
-                            case '0':
                                 system("clear");
                                 goto menu;
                                 break;
-
-                            case '1':
-                                system("clear");
-                                change_password(main_password);
-                                break;
-
-                            case '2':
-                                system("clear");
-                                display_current_password();
-                                break;
-
-                            case '3':
-                                system("clear");
-                                printf("Note: Resetting the app will delete all your data like stored passwords, cashed images, etc.");
-                                printf("\n\nAre you sure you want to continue? [Y/n] : ");
-                                scanf(" %c", &ch_reset);
-                                getchar();
-                                ch_reset = tolower(ch_reset);
-
-                                if (ch_reset == 'y')
-                                {
-                                    system("clear");
-                                    system("echo Reseting...");
-                                    sleep(3);
-                                    system("clear");
-                                    sleep(2);
-                                    system("echo \"Hi $USER, Welcome to the MasterKey App\"");
-                                    printf("\n");
-                                    sleep(1);
-                                    printf("The MasterKey App\n");
-                                    printf("\"One Password for All Your Passwords...\"");
-                                    printf("\n\n");
-                                    sleep(4);
-                                    system("echo © 2022 The Sudo Club");
-                                    sleep(5);
-                                    system("clear");
-                                    reset();
-                                    printf("Done\n");
-                                    system("clear");
-                                    goto startup;
-                                }
-                                else
-                                {
-                                    printf("\nAbort!\n");
-                                }
-                                break;
-
-                            case '4':
-                                // update
-                                system("clear");
-                                check_for_update();
-                                system("cd /home/$USER/Documents/.Program-Files/.MasterKey/ && chmod 500 .update.sh && bash .update.sh");
-                                break;
-
-                            case '5':
-                                system("clear");
-                                printf("Note: Deleting the app will clear all your app data, MasterKey program files and packages from your system\n");
-                                printf("\nIf you will be reinstalling the app in future make sure to backup your data by exporting the passwords from - \n[3]Edit dictionary > [4]Backup & Restore > [1]Export passwords.\n");
-                                printf("\n\nAre you sure you want to continue [Y/n] : ");
-                                scanf(" %c", &ch_uninstall);
-
-                                ch_uninstall = tolower(ch_uninstall);
-
-                                if (ch_uninstall == 'y')
-                                {
-                                    system("sudo rm /usr/include/stded.h");
-                                    system("clear");
-                                    system("echo We're sorry to see you go!");
-                                    sleep(3);
-                                    system("echo && echo Deleting MasterKey program files...");
-                                    sleep(3);
-                                    system("sed -i -e '/masterkey/d' /home/$USER/.bashrc");
-                                    system("clear");
-                                    system("rm /home/$USER/.run_masterkey.sh");
-                                    system("clear");
-                                    system("rm -rf /home/$USER/Documents/.Program-Files");
-                                    system("echo && echo deleting installed packages...");
-                                    sleep(3);
-                                    system("sudo apt --purge remove streamer -f -y &");
-                                    system("sudo apt --purge remove feh -f -y &");
-                                    sleep(1);
-                                    system("clear");
-                                    sleep(1);
-                                    system("echo && echo App successfully uninstalled!");
-                                    sleep(3);
-                                    system("clear");
-                                    exit(1);
-                                }
-                                else
-                                {
-                                    goto menu_4;
-                                }
-
-                                break;
-
-                                // case '5':
-                                //     system("clear");
-                                //     system("chmod 400 /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
-                                //     system("nano /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
-                                //     system("chmod 100 /home/$USER/Documents/.Program-Files/.MasterKey/.password_manager.c");
-                                //     break;
-
-                                // case '5':
-
-                                //     about();
-
-                                //     break;
-
-                            default:
-                                printf("\nInvalid Input!\n");
-                                sleep(1);
-                                system("clear");
-                                goto menu_4;
-                                break;
                             }
-
-                            printf("<-- Go back! [Y] : ");
+                        goback:
+                            printf("<-- Go back to menu! [Y] : ");
                             fflush(stdin);
                             scanf("%c", &go_back);
                             getchar();
                             // printf("%c", go_back);
                             system("clear");
-                            goto menu_4;
 
-                            break;
-
-                        default:
-                            printf("\nInvalid Input!\n");
-                            sleep(1);
-                            system("clear");
                             goto menu;
-                            break;
+
+                            menu_attempts = 0;
                         }
-                    goback:
-                        printf("<-- Go back to menu! [Y] : ");
-                        fflush(stdin);
-                        scanf("%c", &go_back);
-                        getchar();
-                        // printf("%c", go_back);
                         system("clear");
-
-                        goto menu;
-
-                        menu_attempts = 0;
                     }
-                    system("clear");
-                }
-                else
-                {
-                    click_img(); // clicking image of user in he/she enters wrong key
-
-                    suspect_bool = 1;
-                    system("chmod 600 .suspect.txt");
-                    FILE *suspect;
-                    suspect = fopen(".suspect.txt", "w");
-                    fprintf(suspect, "%d", suspect_bool);
-                    fclose(suspect);
-                    system("chmod 000 .suspect.txt");
-                    printf("Wrong key!!! %d attempts left\n\n", menu_attempts - 1); // for user convience subtracting 1 from menu_attempts
-
-                    menu_attempts--; // decrementing the attempts when pin is incorrect
-
-                    if (menu_attempts == 0)
+                    else
                     {
-                        printf("Forgot key? [Y/n] : ");
-                        scanf(" %c", &ch_forgot);
+                        click_img(); // clicking image of user in he/she enters wrong key
 
-                        ch_forgot = tolower(ch_forgot);
-                        if (ch_forgot == 'y')
+                        // timestamp
+                        system("chmod 600 .time.txt");
+                        FILE *t_stamp;
+                        t_stamp = fopen(".time.txt", "w");
+                        system("chmod 000 .time.txt");
+                        time_t rawtime;
+                        struct tm *timeinfo;
+                        time(&rawtime);
+                        timeinfo = localtime(&rawtime);
+                        fprintf(t_stamp, "%s", asctime(timeinfo));
+                        fclose(t_stamp);
+
+                        suspect_bool = 1;
+                        system("chmod 600 .suspect.txt");
+                        FILE *suspect;
+                        suspect = fopen(".suspect.txt", "w");
+                        fprintf(suspect, "%d", suspect_bool);
+                        fclose(suspect);
+                        system("chmod 000 .suspect.txt");
+
+                        // setting limit
+                        FILE *lim;
+                        system("chmod 600 .limit.txt");
+                        lim = fopen(".limit.txt", "w+");
+
+                        fscanf(lim, "%d", &limit);
+                        limit++;
+                        fprintf(lim, "%d", limit);
+                        fclose(lim);
+                        system("chmod 000 .limit.txt");
+
+                        printf("Wrong key!!! %d attempts left\n\n", menu_attempts - 1); // for user convience subtracting 1 from menu_attempts
+
+                        menu_attempts--; // decrementing the attempts when pin is incorrect
+
+                        if (menu_attempts == 0)
                         {
-                            int r;
-                            forgot_password(&r);
+                            printf("Forgot key? [Y/n] : ");
+                            scanf(" %c", &ch_forgot);
 
-                            if (r == 1)
+                            ch_forgot = tolower(ch_forgot);
+                            if (ch_forgot == 'y')
                             {
-                                reset_password();
+                                int r;
+                                forgot_password(&r);
+
+                                if (r == 1)
+                                {
+                                    reset_password();
+                                }
+                                else
+                                {
+                                    printf("\nFailed to reset password!\n");
+                                }
                             }
                             else
                             {
-                                printf("\nFailed to reset password!\n");
+                                exiting();
                             }
-                        }
-                        else
-                        {
-                            exiting();
                         }
                     }
                 }
@@ -1442,6 +1520,39 @@ void please_wait()
     printf("Please wait\n\n");
     usleep(250000);
     // system("clear");
+
+    printf("\e[?25h");
+}
+
+// timer for try again later
+void try_again()
+{
+    printf("\e[?25l");
+    int n;
+    FILE *ttr;
+    system("chmod 600 .timer.txt");
+    ttr = fopen(".timer.txt", "r");
+    system("chmod 000 .timer.txt");
+    fscanf(ttr, "%d", &n);
+    fclose(ttr);
+
+    if (n <= 1)
+    {
+        n = 60;
+    }
+
+    for (int i = n; i >= 1; i--)
+    {
+        printf("Try again in %d sec\n", i);
+        sleep(1);
+        system("clear");
+        FILE *ptr;
+        system("chmod 600 .timer.txt");
+        ptr = fopen(".timer.txt", "w");
+        system("chmod 000 .timer.txt");
+        fprintf(ptr, "%d", i);
+        fclose(ptr);
+    }
 
     printf("\e[?25h");
 }
