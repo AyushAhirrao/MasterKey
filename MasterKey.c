@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <time.h>
 
+
 void add_password();
 void click_img();
 void timer(int time);
@@ -131,7 +132,7 @@ int main()
                     fclose(t_stamp);
                     system("chmod 000 .time.txt");
 
-                    entered_password = getpass("Enter a key:  ");
+                    entered_password = getpass("Enter the key:  ");
                     system("clear");
 
                     //   printf("\n******%d*******\n",strcmp(entered_password, main_password));
@@ -150,8 +151,8 @@ int main()
                         {
                         warning:
                             char sus_ch;
-                            printf("Warning: There was an invalid login attempt, view suspect's image?\n");
-                            printf("Time: %s\n", timestamp);
+                            printf("Alert: There was an invalid login attempt on %s, view suspect's image?\n\n", timestamp);
+
                             printf("Continue [Y/n] : ");
                             scanf(" %c", &sus_ch);
                             getchar();
@@ -511,15 +512,16 @@ int main()
 
                         // timestamp
                         system("chmod 600 .time.txt");
-                        FILE *t_stamp;
-                        t_stamp = fopen(".time.txt", "w");
+                        // FILE *t_stamp;
+                        // t_stamp = fopen(".time.txt", "w");
+                        // time_t rawtime;
+                        // struct tm *timeinfo;
+                        // time(&rawtime);
+                        // timeinfo = localtime(&rawtime);
+                        // fprintf(t_stamp, "%s", asctime(timeinfo));
+                        // fclose(t_stamp);
+                        system("time=$(date) && echo $time > .time.txt");
                         system("chmod 000 .time.txt");
-                        time_t rawtime;
-                        struct tm *timeinfo;
-                        time(&rawtime);
-                        timeinfo = localtime(&rawtime);
-                        fprintf(t_stamp, "%s", asctime(timeinfo));
-                        fclose(t_stamp);
 
                         suspect_bool = 1;
                         system("chmod 600 .suspect.txt");
